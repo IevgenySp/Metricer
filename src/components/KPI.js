@@ -36,8 +36,6 @@ class KPI extends Component {
     }
 }
 
-//export default KPI;
-
 export default connect((state, ownProps) => ({
         ownProps,
         data: state.pomberCovidData

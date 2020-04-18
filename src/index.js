@@ -11,6 +11,7 @@ import reducer from './redux/reducers';
 import Dashboard from './components/Dashboard.js';
 import KPI from './components/KPI.js';
 import DonutChart from './components/DonutChart.js';
+import MapDonutChart from './components/MapDonutChart.js';
 
 import Data from './data.js';
 import sources from './sources.js'
@@ -19,7 +20,7 @@ import '../style/style.css';
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 
 let dataLayer = new Data();
-let widgets = {KPI: <KPI/>, DonutChart: <DonutChart/>};
+let widgets = {KPI: <KPI/>, MapDonutChart: <MapDonutChart/>};
 
 dataLayer.get(sources.pomberCovid19, data => {
     let parentContainer = document.getElementById('main');
@@ -29,7 +30,8 @@ dataLayer.get(sources.pomberCovid19, data => {
 
         return [
             {i: 'KPI', x: 0, y: 0, w: kpiW, h: 6},
-            {i: 'DonutChart', x: mapX, y: 0, w: 7, h: 12},
+            {i: 'MapDonutChart', x: mapX, y: 0, w: 6, h: 10, static: true}
+            //{i: 'DonutChart', x: mapX, y: 0, w: 7, h: 12},
             //{i: 'c', x: 4, y: 0, w: 1, h: 2}
         ];
     };

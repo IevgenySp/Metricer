@@ -100,8 +100,6 @@ class DonutChart extends Component {
 
     componentDidUpdate() {
         //this.updateChart(this.container);
-        //console.log('ura');
-        //this.Donut.build(this.geometries.get('1'), {hovered: this.state.hoveredDonut});
         this.Donut.build(this.geometries, {hovered: this.state.hoveredDonut});
     }
 
@@ -138,8 +136,6 @@ class DonutChart extends Component {
         )
     }
 }
-
-//export default KPI;
 
 export default connect((state, ownProps) => ({
         ownProps,

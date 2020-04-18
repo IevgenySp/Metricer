@@ -1,19 +1,35 @@
+import Tooltip from './Tooltip.js'
+
 class Donut {
     constructor(props) {
+        let self = this;
+        this.container = props.container;
         this.canvas = props.canvas;
+        this.pixelRatio = props.pixelRatio;
         this.animating = false;
         this.hoveredDonutAndSegment = null;
+        this.geometries = new Map();
+        this.Tooltip = new Tooltip({container: this.container, options: {width: 150, height: 80}});
+        this.canvas.onmousemove = e => {
+            this.hover(e);
+        };
     };
 
-    build(geometries, options) {
+    build(data, options) {
+        this.buildGeometries(data, options.config);
+        this.draw(options);
+    };
+
+    draw(options) {
         const context = this.canvas.getContext('2d');
 
         let animateSegments = progress => {
             this.animating = progress < 1;
             context.clearRect(0,0 , context.canvas.width, context.canvas.height);
 
-            for (let item of geometries) {
+            for (let item of this.geometries) {
                 let geometry = item[1];
+
                 const angles = this.percentsToAngles(geometry.percents);
 
                 angles.forEach((angle, index) => {
@@ -39,13 +55,13 @@ class Donut {
             }
         };
         let buildSegments = options => {
-            let hovered = options.hovered;
+            let hovered = options ? options.hovered: null;
 
             this.hoveredDonutAndSegment = null;
 
             context.clearRect(0,0 , context.canvas.width, context.canvas.height);
 
-            for (let item of geometries) {
+            for (let item of this.geometries) {
                 let geometry = item[1];
                 const angles = this.percentsToAngles(geometry.percents);
 
@@ -68,34 +84,36 @@ class Donut {
                     }
                 });
 
-                angles.forEach((angle, index) => {
-                    context.beginPath();
-                    context.fillStyle = geometry.colors[index];
-                    context.strokeStyle = '#000';
-                    context.lineWidth = 1;
-                    context.moveTo(geometry.x, geometry.y);
-                    context.arc(geometry.x, geometry.y, geometry.radius, angle.start, angle.end);
-                    context.lineTo(geometry.x, geometry.y);
-
-                    if (context.isPointInPath(hovered.x, hovered.y) && this.hoverGeometry(hovered) === item[0] && !this.animating) {
-                        context.lineWidth = 3;
-                        context.strokeStyle = '#d5ece9';
-                        context.stroke();
-                        context.fill();
-                        this.hoveredDonutAndSegment = [item[0], index];
-                    }
-
-                    if (geometry.innerRadius && geometry.innerColor) {
+                if (hovered !== null) {
+                    angles.forEach((angle, index) => {
                         context.beginPath();
-                        context.fillStyle = geometry.innerColor;
-                        context.arc(geometry.x, geometry.y, geometry.innerRadius, 0, Math.PI * 2);
-                        context.fill();
-                    }
-                });
+                        context.fillStyle = geometry.colors[index];
+                        context.strokeStyle = '#000';
+                        context.lineWidth = 1;
+                        context.moveTo(geometry.x, geometry.y);
+                        context.arc(geometry.x, geometry.y, geometry.radius, angle.start, angle.end);
+                        context.lineTo(geometry.x, geometry.y);
+
+                        if (context.isPointInPath(hovered.x * this.pixelRatio, hovered.y * this.pixelRatio) && this.hoverGeometry(hovered) === item[0] && !this.animating) {
+                            context.lineWidth = 3;
+                            context.strokeStyle = '#d5ece9';
+                            context.stroke();
+                            context.fill();
+                            this.hoveredDonutAndSegment = [item[0], index];
+                        }
+
+                        if (geometry.innerRadius && geometry.innerColor) {
+                            context.beginPath();
+                            context.fillStyle = geometry.innerColor;
+                            context.arc(geometry.x, geometry.y, geometry.innerRadius, 0, Math.PI * 2);
+                            context.fill();
+                        }
+                    });
+                }
             }
         };
 
-        if (options.animate) {
+        if (options && options.animate) {
             this.animate({
                 duration: 1000,
                 // https://learn.javascript.ru/js-animation
@@ -106,10 +124,83 @@ class Donut {
                     animateSegments(progress);
                 }
             });
-        } else if (options.hovered) {
+        } else if (options && options.hovered) {
             buildSegments({hovered: options.hovered});
+        } else {
+            buildSegments();
         }
     };
+
+    hover(event) {
+        // important: correct mouse position:
+        let rect = this.canvas.getBoundingClientRect();
+        let x = event.clientX - rect.left;
+        let y = event.clientY - rect.top;
+        let hoveredGeometry = this.isPointInsideDonut({x, y}, this.geometries);
+
+        if (hoveredGeometry.length > 0) {
+            this.canvas.style.cursor = 'pointer';
+            this.draw({hovered: {id: hoveredGeometry, x: x, y: y } });
+
+            let tooltipInfo = this.getHoveredDonutAndSegment();
+            let tooltipBorderColor = null;
+            let tooltipHeader = null;
+            let tooltipLabel = null;
+            let tooltipNumber = null;
+            if (tooltipInfo !== null) {
+                tooltipBorderColor = this.geometries.get(tooltipInfo[0]).colors[tooltipInfo[1]];
+                tooltipHeader = this.geometries.get(tooltipInfo[0]).headerLabel;
+                tooltipLabel = this.geometries.get(tooltipInfo[0]).labels[tooltipInfo[1]];
+                tooltipNumber = this.geometries.get(tooltipInfo[0]).rawData[tooltipInfo[1]];
+            }
+
+            this.Tooltip.show({x, y, tooltipBorderColor, tooltipHeader, tooltipLabel, tooltipNumber});
+        } else {
+            this.canvas.style.cursor = 'default';
+            this.draw();
+            this.Tooltip.hide();
+        }
+    };
+
+    buildGeometries(data, config) {
+        for (let item of data) {
+            if (item[1].x && item[1].y) {
+                let radius = 10;
+                let innerRadius = 5;
+                let innerColor = '#0a1a1f';
+                let colors = ['green'];
+                let rawData = null;
+                let percents = [100];
+                let labels = [''];
+
+                if (config) {
+                    if (config.radius)  radius = this.checkParam(config.radius, item[1]);
+                    if (config.innerRadius)  innerRadius = this.checkParam(config.innerRadius, item[1]);
+                    if (config.innerColor)  innerColor = this.checkParam(config.innerColor, item[1]);
+                    if (config.colors)  colors = this.checkParam(config.colors, item[1]);
+                    if (config.rawData) rawData = this.checkParam(config.rawData, item[1]);
+                    if (config.percents) percents = this.checkParam(config.percents, item[1]);
+                    if (config.labels) labels = this.checkParam(config.labels, item[1]);
+                }
+
+                this.geometries.set(item[0], {
+                   headerLabel: item[0],
+                   x: item[1].x,
+                   y: item[1].y,
+                   radius: radius,
+                   //innerRadius: innerRadius,
+                   //innerColor: innerColor,
+                   colors: colors,
+                   startAngle: Math.PI * 1.5,
+                   endAngle: Math.PI,
+                   anticlockwise: false,
+                   rawData: rawData,
+                   percents: percents,
+                   labels: labels
+                });
+            }
+        }
+    }
 
     percentsToAngles(percents) {
       const percentForRad = 0.062831853071796;
@@ -172,6 +263,25 @@ class Donut {
     getHoveredDonutAndSegment() {
         return this.hoveredDonutAndSegment;
     }
+
+    checkParam(param, item) {
+      let result = param;
+
+      if (param instanceof Function) {
+          result = param(item);
+      }
+
+      return result;
+    };
+
+    resize(width, height, pixelRatio) {
+        this.canvas.width = width * pixelRatio;
+        this.canvas.height = height * pixelRatio;
+        this.canvas.style.width = width + 'px';
+        this.canvas.style.height = height + 'px';
+        let context = this.canvas.getContext('2d');
+        context.scale(pixelRatio, pixelRatio);
+    };
 }
 
 export default Donut;
