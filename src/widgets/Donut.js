@@ -115,7 +115,7 @@ class Donut {
 
         if (options && options.animate) {
             this.animate({
-                duration: 1000,
+                duration: 1500,
                 // https://learn.javascript.ru/js-animation
                 timing(timeFraction) {
                     return 1 - Math.sin(Math.acos(timeFraction));
@@ -174,13 +174,13 @@ class Donut {
                 let labels = [''];
 
                 if (config) {
-                    if (config.radius)  radius = this.checkParam(config.radius, item[1]);
-                    if (config.innerRadius)  innerRadius = this.checkParam(config.innerRadius, item[1]);
-                    if (config.innerColor)  innerColor = this.checkParam(config.innerColor, item[1]);
-                    if (config.colors)  colors = this.checkParam(config.colors, item[1]);
-                    if (config.rawData) rawData = this.checkParam(config.rawData, item[1]);
-                    if (config.percents) percents = this.checkParam(config.percents, item[1]);
-                    if (config.labels) labels = this.checkParam(config.labels, item[1]);
+                    if (config.radius)  radius = this.checkParam(config.radius, item[1], item[0]);
+                    if (config.innerRadius)  innerRadius = this.checkParam(config.innerRadius, item[1], item[0]);
+                    if (config.innerColor)  innerColor = this.checkParam(config.innerColor, item[1], item[0]);
+                    if (config.colors)  colors = this.checkParam(config.colors, item[1], item[0]);
+                    if (config.rawData) rawData = this.checkParam(config.rawData, item[1], item[0]);
+                    if (config.percents) percents = this.checkParam(config.percents, item[1], item[0]);
+                    if (config.labels) labels = this.checkParam(config.labels, item[1], item[0]);
                 }
 
                 this.geometries.set(item[0], {
@@ -264,11 +264,11 @@ class Donut {
         return this.hoveredDonutAndSegment;
     }
 
-    checkParam(param, item) {
+    checkParam(param, item, key) {
       let result = param;
 
       if (param instanceof Function) {
-          result = param(item);
+          result = param(item, key);
       }
 
       return result;

@@ -30,6 +30,8 @@ class Dashboard extends Component {
 
     render() {
         let width = this.props.container.offsetWidth;
+        let height = this.props.container.offsetHeight;
+        let margin = 20;
         let layout = this.props.layout(width);
         const widgets = layout.map(item => {
             return this.props.widgets[item.i] ?
@@ -38,7 +40,7 @@ class Dashboard extends Component {
         });
 
         return (
-            <GridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={width} margin={[20, 20]}>
+            <GridLayout className="layout" layout={layout} cols={12} rowHeight={Math.floor(height/12)-margin} width={width} margin={[margin, margin]}>
                 {widgets}
             </GridLayout>
         )

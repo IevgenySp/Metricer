@@ -1,5 +1,7 @@
 body {
-    margin: 0
+    margin: 0;
+    height: 100%;
+    background: #0a1a1f;
 }
 
 .main {
@@ -87,7 +89,7 @@ opacity: 0.7;*/
     left: 5px;
     right: 5px;
     background: #0a1a1f;
-    opacity: 0.9;
+    opacity: 1;
     display: flex;
 }
 
@@ -168,6 +170,19 @@ opacity: 0.7;*/
     align-items: center;
 }
 
+.map-donut-description {
+    color: #d5ece9;
+    font-family: roboto condensed,sans-serif;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 9px;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    padding: 5px;
+    z-index: 10000;
+}
+
 .tooltip {
     background: /*#c9e6e9*/ #091a1f;
     position: absolute;
@@ -214,4 +229,306 @@ opacity: 0.7;*/
     font-size: 18px;
     text-align: center;
     margin-top: 3px;
+}
+
+.bars-trend-controls {
+    display: flex;
+    color: #d5ece9;
+    font-family: roboto condensed,sans-serif;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 10px;
+    text-align: center;
+    position: absolute;
+    z-index: 10;
+    width: 35%;
+    right: 10px;
+    top: 5px;
+    cursor: pointer;
+    background: #545454;
+}
+
+.bars-trend-controls .confirmed {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    text-align: center;
+    border: 1px solid #d5ece9;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    padding: 3px;
+}
+
+.bars-trend-controls .confirmed:hover {
+    background: #3e3d3d;
+}
+
+.bars-trend-controls .confirmed.selected {
+    background: #ffc107;
+    color: #3e3d3d;
+    outline: none;
+}
+
+.bars-trend-controls .deaths {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    text-align: center;
+    border-top: 1px solid #d5ece9;
+    border-bottom: 1px solid #d5ece9;
+    padding: 3px;
+}
+
+.bars-trend-controls .deaths:hover {
+    background: #3e3d3d;
+}
+
+.bars-trend-controls .deaths.selected {
+    background: #f44336;
+    color: #3e3d3d;
+    outline: none;
+}
+
+.bars-trend-controls .recovered {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    text-align: center;
+    border: 1px solid #d5ece9;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding: 3px;
+}
+
+.bars-trend-controls .recovered:hover {
+    background: #3e3d3d;
+}
+
+.bars-trend-controls .recovered.selected {
+    background: #8bc34a;
+    color: #3e3d3d;
+    outline: none;
+}
+
+.bars-trend-input {
+    left: 10px;
+    border: 1px solid #d5ece9;
+    height: 16px;
+    border-radius: 4px;
+    background: #3e3d3d;
+    color: #d5ece9;
+    font-family: roboto condensed,sans-serif;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 10px;
+    text-align: center;
+    position: absolute;
+    top: 5px;
+    z-index: 10;
+}
+
+.bars-trend-input::placeholder {
+    color: rgba(213, 236, 233, 0.8);
+}
+
+.bars-trend-description {
+    font-family: roboto condensed,sans-serif;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 9px;
+    text-align: left;
+    color: #d5ece9;
+    position: absolute;
+    width: 40%;
+    top: 5px;
+    left: 140px;
+}
+
+.bars-trend-controls.bars-3d-controls {
+    right: 5px;
+    width: 200px;
+}
+
+.bars-3d-description {
+    color: #d5ece9;
+    font-family: roboto condensed,sans-serif;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 9px;
+    text-align: left;
+    position: absolute;
+    width: 100%;
+    padding: 5px;
+    top: 25px;
+}
+
+.table-chart {
+    width: 100%;
+    height: 100%;
+    color: #d5ece9;
+    font-family: roboto condensed,sans-serif;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 10px;
+    text-align: center;
+}
+
+.ag-header-cell-label {
+    justify-content: center;
+    border-bottom: 1px solid rgb(234, 16, 43);
+    align-items: center;
+    font-weight: bold;
+}
+
+.ag-row {
+    border-bottom: 1px solid rgba(148, 169, 168, 0.4);
+}
+
+.ag-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}
+
+div[col-id="country"] {
+    justify-content: left;
+    margin-left: 5px;
+}
+
+.custom-tooltip {
+    position: absolute;
+    width: 100px;
+    border: 2px solid #8bc34a;
+    border-radius: 3px;
+    overflow: hidden;
+    pointer-events: none;
+    transition: opacity 1s;
+    padding: 5px;
+}
+
+.custom-tooltip.ag-tooltip-hiding {
+    opacity: 0;
+}
+
+.table-cell {
+    display: flex;
+    flex-direction: column;
+}
+
+.area-chart-controls {
+    display: flex;
+    color: #d5ece9;
+    font-family: roboto condensed,sans-serif;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 10px;
+    text-align: center;
+    position: absolute;
+    z-index: 10;
+    width: 35%;
+    right: 10px;
+    top: 5px;
+    cursor: pointer;
+    background: #545454;
+}
+
+.area-chart-controls .confirmed.dynamic {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    text-align: center;
+    border: 1px solid #d5ece9;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    padding: 3px;
+}
+
+.area-chart-controls .confirmed.dynamic:hover {
+    background: #3e3d3d;
+}
+
+.area-chart-controls .confirmed.dynamic.selected {
+    background: #ffc107;
+    color: #3e3d3d;
+    outline: none;
+}
+
+.area-chart-controls .confirmed.total {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    text-align: center;
+    border-top: 1px solid #d5ece9;
+    border-bottom: 1px solid #d5ece9;
+    border-right: 1px solid #d5ece9;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding: 3px;
+}
+
+.area-chart-controls .confirmed.total:hover {
+    background: #3e3d3d;
+}
+
+.area-chart-controls .confirmed.total.selected {
+    background: #ffc107;
+    color: #3e3d3d;
+    outline: none;
+}
+
+.area-chart-controls .deaths.dynamic {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    text-align: center;
+    border: 1px solid #d5ece9;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    padding: 3px;
+}
+
+.area-chart-controls .deaths.dynamic:hover {
+    background: #3e3d3d;
+}
+
+.area-chart-controls .deaths.dynamic.selected {
+    background: #f44336;
+    color: #3e3d3d;
+    outline: none;
+}
+
+.area-chart-controls .deaths.total {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    text-align: center;
+    border-top: 1px solid #d5ece9;
+    border-bottom: 1px solid #d5ece9;
+    border-right: 1px solid #d5ece9;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding: 3px;
+}
+
+.area-chart-controls .deaths.total:hover {
+    background: #3e3d3d;
+}
+
+.area-chart-controls .deaths.total.selected {
+    background: #f44336;
+    color: #3e3d3d;
+    outline: none;
+}
+
+.area-chart-description {
+    color: #d5ece9;
+    font-family: roboto condensed,sans-serif;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 9px;
+    text-align: left;
+    position: absolute;
+    width: 60%;
+    padding: 5px;
 }

@@ -97,7 +97,7 @@ class MapDonut {
     }
 
     donutConfig(dataSet, zoom) {
-        let minMax = getMinMax(dataSet);
+        let minMax = getMinMax(dataSet, ['US']);
         let linearScaleZ = d3.scaleLinear()
             .domain([1.5, 6])
             .range([7.5, 30]);
@@ -106,8 +106,13 @@ class MapDonut {
         let linearScale = d3.scaleLinear()
             .domain([minMax.confirmed.min, minMax.confirmed.max])
             .range(minMaxRadius);
-        let radius = data => {
-            return   linearScale(data.confirmed);
+        let radius = (data, key) => {
+            if (key === 'US') {
+                return 16 + zoomCoef;
+            } else {
+                return   linearScale(data.confirmed);
+            }
+
         };
 
         return {

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import MapDonut from '../widgets/MapDonut.js'
-import { connect } from 'react-redux';
+import Table from '../widgets/Table.js'
+import { connect } from 'react-redux'
 
-class MapDonutChart extends Component {
+class TableChart extends Component {
     constructor(props) {
         super(props);
-        this.state = { width: 0, height: 0 };
+        this.state = {width: 0, height: 0};
     }
 
     updateDimensions() {
@@ -15,19 +15,14 @@ class MapDonutChart extends Component {
             width: container.offsetWidth,
             height: container.offsetHeight
         });
-        this.MapDonut.resize(this.container);
+        this.TableChart.resize(this.container);
     };
 
     componentDidMount() {
-        //this.buildChart(this.container);
         window.addEventListener('resize', this.updateDimensions.bind(this));
-
-        this.MapDonut = new MapDonut({container: this.container, data: this.props.data});
-        this.MapDonut.build();
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.updateDimensions.bind(this));
+        //this.buildChart(this.container);
+        this.TableChart = new Table({container:this.container, data: this.props.data});
+        this.TableChart.build();
     }
 
     componentDidUpdate() {
@@ -40,20 +35,19 @@ class MapDonutChart extends Component {
         return true;
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateDimensions.bind(this));
+    }
+
     render() {
         const style = {
             width: 100 + '%',
             height: 100 + '%'
         };
-        const description = 'Distribution of COVID-19 confirmed, deaths and recovered statistic by countries';
 
         return (
-            <div style={style}>
-                <div className="map-donut-description">{description}</div>
+            <div style={style} className="table-chart" ref={element => { this.container = element }}>
 
-                <div style={style} className="MapDonutChart" id="MapDonutChart" ref={element => { this.container = element }}>
-
-                </div>
             </div>
         )
     }
@@ -65,4 +59,4 @@ export default connect((state, ownProps) => ({
     }),
     dispatch => ({
 
-    }))(MapDonutChart);
+    }))(TableChart);
