@@ -181,6 +181,26 @@ opacity: 0.7;*/
     width: 100%;
     padding: 5px;
     z-index: 10000;
+    top: 12px;
+}
+
+.map-donut-data-link {
+    color: #d5ece9;
+    font-family: roboto condensed,sans-serif;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 7px;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    padding: 5px;
+    z-index: 10000;
+}
+
+.map-donut-data-link a {
+    color: #d5ece9;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .tooltip {

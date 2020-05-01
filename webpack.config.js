@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const BrotliPlugin = require('brotli-webpack-plugin');
 const JavaScriptObfuscator = require('webpack-obfuscator');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = env => {
     let isProd = env && env.NODE_ENV === 'prod';
@@ -16,7 +17,7 @@ module.exports = env => {
         /*resolve: {
             extensions: ['.es6', '.js', '.jsx']
         },*/
-        devtool: 'inline-source-map',
+        devtool: isProd ? '' : 'inline-source-map',
         devServer: {
             contentBase: './dist',
         },
@@ -50,6 +51,12 @@ module.exports = env => {
                     ],
                 }]
         },
+        optimization: {
+            minimize: true,
+            minimizer: [new UglifyJsPlugin({
+                include: /\.min\.js$/
+            })],
+        },
         plugins: [
             // new CleanWebpackPlugin(['dist/*']) for < v2 versions of CleanWebpackPlugin
             new CleanWebpackPlugin(),
@@ -62,20 +69,16 @@ module.exports = env => {
                 //    NODE_ENV: '"dev"'
                 //}
             }),
-            // TODO: Investigate Brotli optimization
-            /*new BrotliPlugin({
-                asset: '[path].br[query]',
-                test: /\.(js|css|html|svg)$/,
-                threshold: 10240,
-                minRatio: 0.8
-            })*/
+            new CopyPlugin([{
+                from: 'favicon',
+                to: 'favicon',
+            }, {
+                from: 'preloader',
+                to: 'preloader',
+            }]),
+            // load `moment/locale/ja.js` and `moment/locale/it.js`
+            new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /ja|it/),
         ],
-        optimization: {
-            minimize: true,
-            minimizer: [new UglifyJsPlugin({
-                include: /\.min\.js$/
-            })],
-        },
         output: {
             filename: '[name].bundle.js',
             path: path.resolve(__dirname, 'dist'),
@@ -84,19 +87,33 @@ module.exports = env => {
     };
 
     if (isProd) {
-        options.optimization.splitChunks = {
-            cacheGroups: {
-                commons: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: 'vendors',
-                    chunks: 'all'
+        options.optimization = {
+            minimize: true,
+            minimizer: [new UglifyJsPlugin({
+                include: /*/\.min\.js$/*/ ['app.min.bundle.js', 'vendors.bundle.js']
+            })],
+            splitChunks: {
+                cacheGroups: {
+                    commons: {
+                        test: /[\\/]node_modules[\\/]/,
+                            name: 'vendors',
+                            chunks: 'all'
+                    }
                 }
             }
         };
 
-        options.plugins.push(new JavaScriptObfuscator ({
+        // TODO: Investigate Brotli optimization
+        /*options.plugins.push(new BrotliPlugin({
+            asset: '[path].br[query]',
+            test: /\.(js|css|html|svg)$/,
+            threshold: 10240,
+            minRatio: 0.8
+        }));*/
+
+        /*options.plugins.push(new JavaScriptObfuscator ({
             rotateUnicodeArray: true
-        }, ['app.bundle.js']));
+        }, ['app.bundle.js']));*/
     }
 
     return options;

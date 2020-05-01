@@ -50,6 +50,7 @@ class MapDonutChart extends Component {
         return (
             <div style={style}>
                 <div className="map-donut-description">{description}</div>
+                <div className="map-donut-data-link">Based on <a href="https://github.com/pomber/covid19" target="_blank">github.com/pomber/covid19</a> data</div>
 
                 <div style={style} className="MapDonutChart" id="MapDonutChart" ref={element => { this.container = element }}>
 

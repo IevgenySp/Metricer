@@ -1,4 +1,5 @@
-import * as d3 from "d3";
+//import * as d3 from "d3";
+import {select} from 'd3-selection';
 
 class Banner {
     constructor(props) {
@@ -10,7 +11,7 @@ class Banner {
       let splittedStrings = this.strings.map(string => {
           return string.split('');
       });
-      let d3Container = d3.select(this.container);
+      let d3Container = select(this.container);
       let str = '';
       let counter = 0;
       let animateStr = (string, counter, i) => {

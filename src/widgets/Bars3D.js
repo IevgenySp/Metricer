@@ -1,7 +1,9 @@
 import echarts from 'echarts';
-import 'echarts-gl';
+import 'echarts-gl/dist/echarts-gl.min';
 import moment from 'moment';
-import * as d3 from "d3";
+//import * as d3 from "d3";
+import { scaleOrdinal } from 'd3-scale';
+import { schemeCategory10 } from 'd3-scale-chromatic';
 import { getSorted, getCountryRank } from '../accessors/pomberCovidData.accessor';
 
 class Bars3D {
@@ -83,7 +85,7 @@ class Bars3D {
         let interval = 5;
         let fullSegments = Math.trunc(max / interval);
         let firstStep = max - fullSegments * interval;
-        let colorScaler = d3.scaleOrdinal().domain(countries).range(d3.schemeCategory10);
+        let colorScaler = scaleOrdinal().domain(countries).range(schemeCategory10);
         let option = {
             tooltip: {
                 formatter: value => {

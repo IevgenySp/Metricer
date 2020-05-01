@@ -1,12 +1,35 @@
 import L from 'leaflet';
-import * as d3 from "d3";
+//import * as d3 from "d3";
+import { scaleLinear } from 'd3-scale';
 import '../../node_modules/leaflet-customlayer';
 import countriesCentroids from '../utils/countriesCentroids';
 import Donut from './Donut.js';
 import { getTotalByCountry, countriesCentroidsMapping, getMinMax } from '../accessors/pomberCovidData.accessor';
 import '../../node_modules/leaflet/dist/leaflet.css'
 
-const tileUrl = "http://{s}.sm.mapstack.stamen.com/(toner-lite,$fff[difference],$fff[@23],$fff[hsl-saturation@20])/{z}/{x}/{y}.png";
+//TODO: layer loaded only via http which makes site insecure
+//const tileUrl = "http://{s}.sm.mapstack.stamen.com/(toner-lite,$fff[difference],$fff[@23],$fff[hsl-saturation@20])/{z}/{x}/{y}.png";
+//TODO: layer not loaded on production server with 403 error
+//const tileUrl = 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png';
+//TODO: layer not fits by style
+/*const Stamen_Toner = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
+    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    subdomains: 'abcd',
+    minZoom: 0,
+    maxZoom: 20,
+    ext: 'png'
+});*/
+//TODO: layer too dark
+/*const CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 19
+});*/
+//TODO: layer needs esry-leaflet plugin which not works properly with ES6 imports
+//const tileUrl = {url:'https://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Light_Gray_Base/MapServer?f=jsapi'};
+
+//TODO: still not optimal but the only available dark free layer for now
+const tileUrl = 'https://cartocdn_{s}.global.ssl.fastly.net/base-midnight/{z}/{x}/{y}.png';
 
 class MapDonut {
     constructor(props) {
@@ -23,22 +46,13 @@ class MapDonut {
             maxBounds: [[-90, -170], [90, 190]],
             maxBoundsViscosity: 0.8,
         }).setView([31.505, 30.09], 1.5);
-        this.tileLayer =  L.tileLayer(tileUrl).addTo(this.map);
 
-        /*var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
-            maxZoom: 20,
-            attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-        }).addTo(this.map);*/
+        let self = this;
+        let layerAsyncLoading = () => {
+            self.tileLayer = L.tileLayer(tileUrl).addTo(self.map);
+        };
 
-        /*L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-            // minZoom: 0,
-            // maxZoom: 18,
-            noWrap: true,
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-            id: 'mapbox.light'
-        }).addTo(this.map);*/
+        setTimeout(layerAsyncLoading, 0);
     }
 
     build() {
@@ -98,12 +112,12 @@ class MapDonut {
 
     donutConfig(dataSet, zoom) {
         let minMax = getMinMax(dataSet, ['US']);
-        let linearScaleZ = d3.scaleLinear()
+        let linearScaleZ = scaleLinear()
             .domain([1.5, 6])
             .range([7.5, 30]);
         let zoomCoef = linearScaleZ(zoom);
         let minMaxRadius = [5 + zoomCoef, 12 + zoomCoef];
-        let linearScale = d3.scaleLinear()
+        let linearScale = scaleLinear()
             .domain([minMax.confirmed.min, minMax.confirmed.max])
             .range(minMaxRadius);
         let radius = (data, key) => {

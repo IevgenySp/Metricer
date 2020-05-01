@@ -1,4 +1,5 @@
-import * as d3 from "d3";
+//import * as d3 from "d3";
+import {select} from 'd3-selection';
 import numeral from 'numeral';
 
 class Tooltip {
@@ -6,7 +7,7 @@ class Tooltip {
         this.container = props.container;
         this.tooltipWidth = props.options.width || 150;
         this.tooltipHeight = props.options.height || 80;
-        this.d3Tooltip = d3.select(this.container).append('div')
+        this.d3Tooltip = select(this.container).append('div')
             .attr('class', 'tooltip')
             .style('width', this.tooltipWidth + 'px')
             .style('height', this.tooltipHeight + 'px')

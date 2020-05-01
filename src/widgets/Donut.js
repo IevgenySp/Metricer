@@ -115,7 +115,7 @@ class Donut {
 
         if (options && options.animate) {
             this.animate({
-                duration: 1500,
+                duration: 2000,
                 // https://learn.javascript.ru/js-animation
                 timing(timeFraction) {
                     return 1 - Math.sin(Math.acos(timeFraction));

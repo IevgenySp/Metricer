@@ -50,6 +50,8 @@ dataLayer.get(sources.pomberCovid19, data => {
         ];
     };
 
+    document.getElementById('loading-screen').style.display = 'none';
+
     render(<Provider store={store}>
         <Dashboard layout={getLayout} widgets={widgets} dataObj={data} container={parentContainer}/>
         </Provider>, document.getElementById('main'));

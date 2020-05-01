@@ -1,6 +1,5 @@
 import echarts from 'echarts';
 import numeral from 'numeral';
-import moment from 'moment';
 import { getTotalByDate } from '../accessors/pomberCovidData.accessor';
 
 class Area {

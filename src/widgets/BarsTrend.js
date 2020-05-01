@@ -1,5 +1,4 @@
 import echarts from 'echarts';
-import numeral from 'numeral';
 import moment from 'moment';
 import { getSorted } from '../accessors/pomberCovidData.accessor';
 

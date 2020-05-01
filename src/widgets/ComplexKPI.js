@@ -1,4 +1,5 @@
-import * as d3 from "d3";
+//import * as d3 from "d3";
+import {select} from 'd3-selection';
 import numeral from 'numeral';
 import moment from 'moment';
 import { getTotal, getLatestDate } from '../accessors/pomberCovidData.accessor';
@@ -12,7 +13,7 @@ class ComplexKPI {
     };
 
     build() {
-        let d3parent = d3.select(this.container);
+        let d3parent = select(this.container);
         let data = getLatestDate(this.data);
 
         d3parent.select('div.kpi-header').remove();
