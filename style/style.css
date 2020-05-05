@@ -552,3 +552,44 @@ div[col-id="country"] {
     width: 60%;
     padding: 5px;
 }
+
+.toolbar-component {
+    display: flex;
+    align-items: center;
+}
+
+.toolbar-component .dark-theme {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    margin-left: 5px;
+    background: #d5ece9;
+    cursor: pointer;
+}
+
+.toolbar-component .dark-theme:hover {
+    background: #4a5a68;
+}
+
+.toolbar-component .dark-theme.selected {
+    border: 2px solid #8bc34a;
+    box-sizing: border-box;
+}
+
+.toolbar-component .light-theme {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    margin-left: 5px;
+    background: #0a1a20;
+    cursor: pointer;
+}
+
+.toolbar-component .light-theme:hover {
+    background: #4a5a68;
+}
+
+.toolbar-component .light-theme.selected {
+    border: 2px solid #8bc34a;
+    box-sizing: border-box;
+}

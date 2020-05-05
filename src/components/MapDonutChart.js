@@ -22,7 +22,7 @@ class MapDonutChart extends Component {
         //this.buildChart(this.container);
         window.addEventListener('resize', this.updateDimensions.bind(this));
 
-        this.MapDonut = new MapDonut({container: this.container, data: this.props.data});
+        this.MapDonut = new MapDonut({container: this.container, data: this.props.data, style: this.props.styleTheme});
         this.MapDonut.build();
     }
 
@@ -32,12 +32,13 @@ class MapDonutChart extends Component {
 
     componentDidUpdate() {
         //this.updateChart(this.container);
+        this.MapDonut.build({style: this.props.styleTheme});
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         /*return nextProps.chart !== this.props.chart ||
             nextState.animationLayerActive !== this.state.animationLayerActive;*/
-        return true;
+        return nextProps.styleTheme !== this.props.styleTheme;
     }
 
     render() {
@@ -62,7 +63,8 @@ class MapDonutChart extends Component {
 
 export default connect((state, ownProps) => ({
         ownProps,
-        data: state.pomberCovidData
+        data: state.pomberCovidData,
+        styleTheme: state.styleTheme
     }),
     dispatch => ({
 

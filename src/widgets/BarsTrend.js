@@ -8,6 +8,7 @@ class BarsTrend {
         this.data = props.data;
         this.mode = props.mode;
         this.country = props.country;
+        this.style = props.style;
         this.barsTrend = echarts.init(this.container);
         this.styles = mode => {
             let styles = {
@@ -40,6 +41,7 @@ class BarsTrend {
     build(options) {
         if (options && options.mode) this.mode = options.mode;
         if (options && options.country !== undefined) this.country = options.country;
+        if (options && options.style !== undefined) this.style = options.style;
 
         let parameter = this.mode;
         let styles = this.styles(parameter);
@@ -143,7 +145,7 @@ class BarsTrend {
                 endValue: dataZoomRange.endValue,
                 fillerColor: styles.dataZoom.fillerColor,
                 textStyle: {
-                    color: '#d5ece9'
+                    color: this.style === 'dark' ? '#d5ece9' : '#000'
                 }
             }
             , {
@@ -155,14 +157,14 @@ class BarsTrend {
                 data: xAxisData,
                 axisLine: {
                     lineStyle: {
-                        color: '#d5ece9'
+                        color: this.style === 'dark' ? '#d5ece9' : '#000'
                     }
                 }
             },
             yAxis: {
                 axisLine: {
                     lineStyle: {
-                        color: '#d5ece9'
+                        color: this.style === 'dark' ? '#d5ece9' : '#000'
                     }
                 }
             },

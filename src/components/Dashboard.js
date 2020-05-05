@@ -38,9 +38,19 @@ class Dashboard extends Component {
                 <div key={item.i}>{this.props.widgets[item.i]}</div> :
                 <div key={item.i}>Empty</div>;
         });
+        const className = 'layout ' + this.props.styleTheme;
+        const pageColors = ['#0a1a1f', '#fff'];
+
+        if (this.props.styleTheme === 'dark') {
+            document.body.style.background = pageColors[0];
+            document.getElementsByClassName('main')[0].style.background = pageColors[0];
+        } else if (this.props.styleTheme === 'light') {
+            document.body.style.background = pageColors[1];
+            document.getElementsByClassName('main')[0].style.background = pageColors[1];
+        }
 
         return (
-            <GridLayout className="layout" layout={layout} cols={12} rowHeight={Math.floor(height/12)-margin} width={width} margin={[margin, margin]}>
+            <GridLayout className={className} layout={layout} cols={12} rowHeight={Math.floor(height/12)-margin} width={width} margin={[margin, margin]}>
                 {widgets}
             </GridLayout>
         )
@@ -48,7 +58,8 @@ class Dashboard extends Component {
 }
 
 export default connect((state, ownProps) => ({
-        ownProps
+        ownProps,
+        styleTheme: state.styleTheme
     }),
     dispatch => ({
         onDataUpload: (data) => {

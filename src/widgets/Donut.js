@@ -131,6 +131,11 @@ class Donut {
         }
     };
 
+    clear() {
+        this.canvas.getContext('2d').clearRect(0, 0, this.container.offsetWidth, this.container.offsetHeight);
+        this.Tooltip.remove();
+    }
+
     hover(event) {
         // important: correct mouse position:
         let rect = this.canvas.getBoundingClientRect();

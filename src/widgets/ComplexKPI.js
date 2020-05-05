@@ -1,4 +1,3 @@
-//import * as d3 from "d3";
 import {select} from 'd3-selection';
 import numeral from 'numeral';
 import moment from 'moment';
@@ -19,17 +18,6 @@ class ComplexKPI {
         d3parent.select('div.kpi-header').remove();
         let d3Header = d3parent.append('div')
             .attr('class', 'kpi-header')
-            .style('height', '25px')
-            .style('border-bottom', '1px solid #ea102b')
-            .style('color', '#c9e6e9')
-            .style('text-transform', 'uppercase')
-            .style('font-family', 'roboto condensed,sans-serif')
-            .style('font-size', '17px')
-            .style('font-weight', '300')
-            .style('display', 'flex')
-            .style('justify-content', 'center')
-            .style('align-items', 'center')
-            .style('letter-spacing', '0.5px')
             .text(this.headerLabel);
 
         d3Header.append('div')
@@ -38,31 +26,19 @@ class ComplexKPI {
 
         d3parent.select('div.kpi-body').remove();
         let d3Main = d3parent.append('div')
-            .attr('class', 'kpi-body')
-            .style('height', 'calc(100% - 25px)');
+            .attr('class', 'kpi-body');
 
         let d3LeftPanel = d3Main.append('div')
-            .attr('class', 'kpi-inner-right-panel')
-            .style('background', '#0a1a1f')
-            .style('width', '40%')
-            .style('height', '40%')
-            .style('display', 'flex')
-            .style('flex-direction', 'column')
-            .style('position', 'absolute')
-            .style('padding', '5px')
-            .style('right', '0px');
+            .attr('class', 'kpi-inner-right-panel');
 
         let d3Icons = d3LeftPanel.append('div')
-            .attr('class', 'kpi-icons')
-            .style('display', 'flex');
+            .attr('class', 'kpi-icons');
 
         d3Icons.append('div').attr('class', 'icon-coronavirus');
         d3Icons.append('div').attr('class', 'icon-biohazard');
 
         let innerRightLabels = d3LeftPanel.append('div')
-            .attr('class', 'kpi-inner-right-labels')
-            .style('display', 'flex')
-            .style('flex-direction', 'column');
+            .attr('class', 'kpi-inner-right-labels');
 
         innerRightLabels.append('div')
             .attr('class', 'right-labels-text1')
@@ -76,9 +52,7 @@ class ComplexKPI {
             .attr('class', 'kpi-statistic');
 
         let d3TotalStatistic = d3Statistic.append('div')
-            .attr('class', 'kpi-total-statistic')
-            .style('display', 'flex')
-            .style('flex-direction', 'column');
+            .attr('class', 'kpi-total-statistic');
 
         d3TotalStatistic.append('div')
             .attr('class', 'kpi-total-statistic-label')
@@ -91,14 +65,10 @@ class ComplexKPI {
             .text(numeral(cases.totalCases).format('0,0'));
 
         let d3DetailedStatistic = d3Statistic.append('div')
-            .attr('class', 'kpi-detailed-statistic')
-            .style('display', 'flex')
-            .style('flex-direction', 'column');
+            .attr('class', 'kpi-detailed-statistic');
 
         let d3DDethStatistic = d3DetailedStatistic.append('div')
-            .attr('class', 'kpi-detailed-death-statistic')
-            .style('display', 'flex')
-            .style('flex-direction', 'column');
+            .attr('class', 'kpi-detailed-death-statistic');
 
         d3DDethStatistic.append('div')
             .attr('class', 'kpi-detailed-death-statistic-label')
@@ -109,9 +79,7 @@ class ComplexKPI {
             .text(numeral(cases.deathCases).format('0,0'));
 
         let d3DRecoverStatistic = d3DetailedStatistic.append('div')
-            .attr('class', 'kpi-detailed-recover-statistic')
-            .style('display', 'flex')
-            .style('flex-direction', 'column');
+            .attr('class', 'kpi-detailed-recover-statistic');
 
         d3DRecoverStatistic.append('div')
             .attr('class', 'kpi-detailed-recover-statistic-label')

@@ -22,13 +22,18 @@ class BarsTrendChart extends Component {
     componentDidMount() {
         window.addEventListener('resize', this.updateDimensions.bind(this));
         //this.buildChart(this.container);
-        this.BarsTrend = new BarsTrend({container:this.container, data: this.props.data, mode: this.state.mode, country: this.state.country});
+        this.BarsTrend = new BarsTrend({
+            container:this.container,
+            data: this.props.data,
+            mode: this.state.mode,
+            country: this.state.country,
+            style: this.props.styleTheme});
         this.BarsTrend.build();
     }
 
     componentDidUpdate() {
         //this.updateChart(this.container);
-        let options = {mode: this.state.mode, country: this.state.country};
+        let options = {mode: this.state.mode, country: this.state.country, style: this.props.styleTheme};
         this.BarsTrend.build(options);
     }
 
@@ -102,7 +107,8 @@ class BarsTrendChart extends Component {
 
 export default connect((state, ownProps) => ({
         ownProps,
-        data: state.pomberCovidData
+        data: state.pomberCovidData,
+        styleTheme: state.styleTheme
     }),
     dispatch => ({
 

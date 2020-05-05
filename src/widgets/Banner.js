@@ -1,4 +1,3 @@
-//import * as d3 from "d3";
 import {select} from 'd3-selection';
 
 class Banner {

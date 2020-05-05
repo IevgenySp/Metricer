@@ -1,5 +1,4 @@
 import L from 'leaflet';
-//import * as d3 from "d3";
 import { scaleLinear } from 'd3-scale';
 import '../../node_modules/leaflet-customlayer';
 import countriesCentroids from '../utils/countriesCentroids';
@@ -30,11 +29,15 @@ import '../../node_modules/leaflet/dist/leaflet.css'
 
 //TODO: still not optimal but the only available dark free layer for now
 const tileUrl = 'https://cartocdn_{s}.global.ssl.fastly.net/base-midnight/{z}/{x}/{y}.png';
+const tileLightUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png';
+//TODO: another option of white layout tiles
+//const tileLightUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png';
 
 class MapDonut {
     constructor(props) {
         this.container = props.container;
         this.data = props.data;
+        this.style = props.style;
         this.width = this.container.offsetWidth;
         this.height = this.container.offsetHeight;
         this.map = L.map(this.container.id, {
@@ -48,14 +51,33 @@ class MapDonut {
         }).setView([31.505, 30.09], 1.5);
 
         let self = this;
+        let tile = this.style === 'dark' ? tileUrl : tileLightUrl;
         let layerAsyncLoading = () => {
-            self.tileLayer = L.tileLayer(tileUrl).addTo(self.map);
+            self.tileLayer = L.tileLayer(tile).addTo(self.map);
         };
 
         setTimeout(layerAsyncLoading, 0);
     }
 
-    build() {
+    build(options) {
+        if (options && options.style) {
+            if (this.style !== options.style && this.tileLayer !== undefined) {
+                this.tileLayer.removeFrom(this.map);
+                this.style = options.style;
+
+                if (this.Donut) {
+                    this.Donut.clear();
+                }
+
+                let tile = this.style === 'dark' ? tileUrl : tileLightUrl;
+                let layerAsyncLoading = () => {
+                    self.tileLayer = L.tileLayer(tile).addTo(self.map);
+                };
+
+                setTimeout(layerAsyncLoading, 0);
+            }
+        }
+
         let self = this;
         let renderIndex = 0;
         let donutData = getTotalByCountry(this.data);

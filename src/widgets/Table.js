@@ -12,9 +12,14 @@ class Table {
     constructor(props) {
         this.container = props.container;
         this.data = props.data;
+        this.style = props.style;
     }
 
-    build() {
+    build(options) {
+        if (options && options.style) {
+            this.style = options.style;
+        }
+
         const sortedData = getSorted(this.data, 'confirmed', 'descending');
         const headers = ['country', 'confirmed', 'deaths', 'recovered'];
         let rowData = [];
@@ -29,28 +34,31 @@ class Table {
            row[headers[1]] = {
                data: numeral(lastData[headers[1]]).format('0,0'),
                diff: lastData[headers[1]] - prevData[headers[1]],
-               color: '#ffc108'
+               color: this.style === 'dark' ? '#ffc108' : '#ff9800'
            };
            row[headers[2]] = {
                data: numeral(lastData[headers[2]]).format('0,0'),
                diff: lastData[headers[2]] - prevData[headers[2]],
-               color: '#f44337'
+               color: this.style === 'dark' ? '#f44337' : '#d2271b'
            };
            row[headers[3]] = {
                data: numeral(lastData[headers[3]]).format('0,0'),
                diff: lastData[headers[3]] - prevData[headers[3]],
-               color: '#8bc34a'
+               color: this.style === 'dark' ? '#8bc34a' : '#3a773d'
            };
            rowData.push(row);
         });
 
         function CustomTooltip() {}
+        let tooltipColorGetter = () => {
+            return this.style === 'dark' ? '#0a1a20' : '#fff';
+        };
 
         CustomTooltip.prototype.init = function(params) {
             let eGui = (this.eGui = document.createElement('div'));
 
             eGui.classList.add('custom-tooltip');
-            eGui.style['background-color'] = '#0a1a20';
+            eGui.style['background-color'] = tooltipColorGetter();
             eGui.innerHTML = '<div>' + params.value + '</div>';
         };
 
@@ -73,26 +81,30 @@ class Table {
             return this.eGui;
         };
 
-        const gridOptions = {
-            defaultColDef: {
-                tooltipComponent: 'customTooltip',
-            },
-            tooltipShowDelay: 0,
-            columnDefs: [
-                {headerName: headers[0], field: headers[0], tooltipField: headers[0]},
-                {headerName: headers[1], field: headers[1], cellRenderer: 'cellRenderer'},
-                {headerName: headers[2], field: headers[2], cellRenderer: 'cellRenderer'},
-                {headerName: headers[3], field: headers[3], cellRenderer: 'cellRenderer'}
-            ],
-            rowData: rowData,
-            components: {
-                customTooltip: CustomTooltip,
-                cellRenderer: CellRenderer
-            },
-        };
+        if (this.GridTable === undefined) {
+            const gridOptions = {
+                defaultColDef: {
+                    tooltipComponent: 'customTooltip',
+                },
+                tooltipShowDelay: 0,
+                columnDefs: [
+                    {headerName: headers[0], field: headers[0], tooltipField: headers[0]},
+                    {headerName: headers[1], field: headers[1], cellRenderer: 'cellRenderer'},
+                    {headerName: headers[2], field: headers[2], cellRenderer: 'cellRenderer'},
+                    {headerName: headers[3], field: headers[3], cellRenderer: 'cellRenderer'}
+                ],
+                rowData: rowData,
+                components: {
+                    customTooltip: CustomTooltip,
+                    cellRenderer: CellRenderer
+                },
+            };
 
-        this.GridOptions = gridOptions;
-        this.GridTable = new Grid(this.container, gridOptions);
+            this.GridOptions = gridOptions;
+            this.GridTable = new Grid(this.container, gridOptions);
+        } else {
+            this.GridOptions.api.setRowData(rowData)
+        }
         this.GridOptions.api.sizeColumnsToFit();
     }
 

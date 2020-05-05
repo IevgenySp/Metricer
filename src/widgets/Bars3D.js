@@ -11,6 +11,7 @@ class Bars3D {
         this.container = props.container;
         this.data = props.data;
         this.mode = props.mode;
+        this.style = props.style;
         this.bars3D = echarts.init(this.container);
         this.styles = mode => {
             let styles = {
@@ -34,6 +35,7 @@ class Bars3D {
 
     build(options) {
         if (options && options.mode) this.mode = options.mode;
+        if (options && options.style !== undefined) this.style = options.style;
 
         let parameter = this.mode;
         let styles = this.styles(parameter);
@@ -105,7 +107,7 @@ class Bars3D {
                 data: dates,
                 axisLine: {
                     lineStyle: {
-                        color: '#d5ece9'
+                        color: this.style === 'dark' ? '#d5ece9' : '#000'
                     }
                 }
             },
@@ -114,7 +116,7 @@ class Bars3D {
                 data: countries,
                 axisLine: {
                     lineStyle: {
-                        color: '#d5ece9'
+                        color: this.style === 'dark' ? '#d5ece9' : '#000'
                     }
                 }
             },
@@ -125,7 +127,7 @@ class Bars3D {
                 type: 'value',
                 axisLine: {
                     lineStyle: {
-                        color: '#d5ece9'
+                        color: this.style === 'dark' ? '#d5ece9' : '#000'
                     }
                 },
                 axisLabel: {

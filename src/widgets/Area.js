@@ -8,6 +8,7 @@ class Area {
         this.data = props.data;
         this.value = props.value;
         this.mode = props.mode;
+        this.style = props.style;
         this.area = echarts.init(this.container);
         this.styles = value => {
             let styles = {
@@ -34,6 +35,7 @@ class Area {
 
     build(options) {
         if (options && options.mode) this.mode = options.mode;
+        if (options && options.style !== undefined) this.style = options.style;
 
         let getData = (mode, dataSet) => {
           if (mode === 'total') {
@@ -86,7 +88,7 @@ class Area {
                 data: date,
                 axisLine: {
                     lineStyle: {
-                        color: '#d5ece9'
+                        color: this.style === 'dark' ? '#d5ece9' : '#000'
                     }
                 }
             },
@@ -94,7 +96,7 @@ class Area {
                 type: 'value',
                 axisLine: {
                     lineStyle: {
-                        color: '#d5ece9'
+                        color: this.style === 'dark' ? '#d5ece9' : '#000'
                     }
                 },
                 axisLabel : {
@@ -120,7 +122,7 @@ class Area {
                     shadowOffsetY: 2
                 },
                 textStyle: {
-                    color: '#d5ece9'
+                    color: this.style === 'dark' ? '#d5ece9' : '#000'
                 }
             }],
             series: [
