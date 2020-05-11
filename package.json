@@ -7,6 +7,8 @@
     "d3": "^5.15.1",
     "echarts": "^4.7.0",
     "echarts-gl": "^1.1.1",
+    "html2canvas": "^1.0.0-rc.5",
+    "jspdf": "^1.5.3",
     "leaflet": "^1.6.0",
     "leaflet-customlayer": "^2.1.0",
     "moment": "^2.24.0",

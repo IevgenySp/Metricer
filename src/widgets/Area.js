@@ -71,7 +71,7 @@ class Area {
 
         let option = {
             grid: {
-                width: this.container.offsetWidth - 70,
+                width: this.container.offsetWidth !== 0 ? this.container.offsetWidth - 70 : '75%',
                 top: 30,
                 left: 50
             },

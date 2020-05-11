@@ -1,0 +1,126 @@
+
+.reporter-main
+  cursor: default
+  font-family: roboto condensed,sans-serif
+  text-transform: uppercase
+  font-weight: 300
+
+  .reporter-header
+    font-size: 10px
+    color: #ffffff
+
+  .reporter-body
+    display: flex
+
+    .reporter-toolbar-left
+      position: fixed
+      margin-left: -63px
+      .reporter-icon
+        width: 60px
+        height: 65px
+        background: #29373d /*rgba(96, 125, 139, 0.41)*/
+        border-left: 3px solid rgba(96, 125, 139, 0.41)
+        border-bottom-left-radius: 50%
+        border-top-left-radius: 50%
+        display: flex
+        align-items: center
+        justify-content: center
+        cursor: pointer
+        .reporter-subicon
+          border-radius: 50%
+          color: #fff
+          width: 15px
+          height: 15px
+          display: flex
+          position: absolute
+          align-items: center
+          justify-content: center
+          margin-left: 18px
+          margin-top: 15px
+          font-size: 12px
+        .reporter-icon-style
+          width: 50px
+          height: 50px
+          background-size: 100%
+          margin-left: 7px
+        .reporter-icon-area
+          background-image: url('../icons/area.svg')
+        .reporter-icon-kpi
+          background-image: url('../icons/kpi.svg')
+          margin-top: -5px
+        .reporter-icon-map
+          background-image: url('../icons/map.svg')
+        .reporter-icon-table
+          background-image: url('../icons/table.svg')
+        .reporter-icon-trend
+          background-image: url('../icons/trend.svg')
+        .reporter-icon-bars3d
+          background-image: url('../icons/bars3d.svg')
+
+      .reporter-icon:hover
+        border-left: 3px solid rgba(139, 195, 74, 0.59)
+
+    .reporter-document
+      display: flex
+      flex-direction: column
+      .reporter-paper
+        background: #ffffff
+        margin-bottom: 10px
+        .paper-block
+          position: absolute
+          box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12)
+          .paper-block-placeholder
+            /*border: 1px dashed #03A9F4*/
+            border-radius: 5px
+            width: 100%
+            height: 100%
+            display: flex
+            align-items: center
+            justify-content: center
+            font-weight: 600
+            color: #ccc
+        .paper-block-text
+          position: absolute
+          text-transform: none
+          font-family: noto sans,sans-serif
+          color: #3a3a3a
+          line-height: 16px
+          font-size: 14px
+          font-style: italic
+          .paper-block-text-placeholder
+            background: #f9f8f8
+            border-radius: 2px
+            height: inherit
+            font-style: normal
+            color: #ccc
+            align-items: center
+            display: flex
+            justify-content: center
+            text-transform: uppercase
+            font-size: 14px
+            cursor: pointer
+
+    .reporter-toolbar-right
+      position: fixed
+      display: flex
+      .reporter-control
+        width: 60px
+        height: 65px
+        //background: #29373d /*rgba(96, 125, 139, 0.41)*/
+        border-left: 3px solid rgba(96, 125, 139, 0.41)
+        border-bottom-right-radius: 50%
+        border-top-right-radius: 50%
+        display: flex
+        align-items: center
+        justify-content: center
+        cursor: pointer
+        .reporter-control-style
+          width: 50px
+          height: 50px
+          background-size: 100%
+          margin-left: -5px
+        .reporter-control-download
+          background-image: url('../icons/download.svg')
+
+      .reporter-control:hover
+        border-right: 3px solid rgba(139, 195, 74, 0.59)
