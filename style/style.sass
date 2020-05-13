@@ -1,5 +1,5 @@
-@import 'dark-theme.sass'
-@import 'light-theme.sass'
+@import 'dark-theme-v2.sass'
+@import 'light-theme-v2.sass'
 
 body
   margin: 0
@@ -12,3 +12,37 @@ body
     background: #0a1a1f
     display: block
     height: 100vh
+
+    .toolbar-component
+      .reports
+        height: 35px
+        width: 35px
+        margin-left: 5px
+        .build-report
+          cursor: pointer
+
+        .reports-component
+          position: absolute
+          background: rgba(0,0,0,0.8)
+          z-index: 20000
+          top: -20px
+          left: -20px
+          justify-content: center
+
+          .close-reports
+            color: #fff
+            left: 10px
+            top: 10px
+            position: absolute
+            background: rgba(139, 195, 74, 0.59)
+            width: 30px
+            height: 30px
+            border-radius: 50%
+            display: flex
+            justify-content: center
+            align-items: center
+            font-size: 18px
+            font-weight: 300
+
+          .close-reports:hover
+             background: rgba(139, 195, 74, 0.9)

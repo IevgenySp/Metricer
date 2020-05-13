@@ -43,7 +43,7 @@ class MapDonut {
         this.map = L.map(this.container.id, {
             renderer: L.canvas(),
             worldCopyJump: true,
-            minZoom: 1.5,
+            minZoom: 0.2,
             maxZoom: 6,
             zoomSnap: 0.25,
             maxBounds: [[-90, -170], [90, 190]],

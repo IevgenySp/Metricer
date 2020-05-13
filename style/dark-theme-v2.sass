@@ -1,18 +1,17 @@
-@import 'light-theme-variables.sass'
+@import 'dark-theme-variables.sass'
 
-.layout.light
+.layout.dark
   .react-grid-item
-    //border: 3px solid $color-bright-red
-    border: 3px solid $color-blue
-    border-top-left-radius: 5px
-    border-bottom-right-radius: 5px
-    box-shadow: 0 0 1px 5px rgba(0, 188, 212, 0.2)
+    border-radius: 6px
+    background: #000000
+    padding: 5px
+    border: 1px solid #2b2b2b
 
   // KPI widget style
   .kpi-header
     height: 25px
-    border-bottom: 1px solid $color-blue
-    color: $color-dark-grey
+    border-bottom: 1px solid $color-bright-red
+    color: $color-white
     font-size: 17px
     font-weight: 300
     display: flex
@@ -26,13 +25,13 @@
     font-size: 12px
 
   .kpi-body
-    background-image: url('../img/world-light.png')
+    background-image: url('../img/world.png')
     background-size: 100%
     opacity: 0.7
     height: calc(100% - 25px)
 
   .kpi-inner-right-panel
-    background: #fff
+    background: $color-black
     width: 40%
     height: 40%
     display: flex
@@ -45,7 +44,7 @@
     display: flex
     width: 100%
     height: 60%
-    border: 1px solid $color-blue
+    border: 1px solid $color-bright-red
 
     .icon-coronavirus
       width: 50%
@@ -65,7 +64,7 @@
     flex-direction: column
 
   .right-labels-text1
-    color: $color-dark-grey
+    color: $color-white
     font-weight: 300
     font-size: clamp(12px, 2.5vw, 25px)
     text-align: right
@@ -83,19 +82,19 @@
     bottom: 10px
     left: 5px
     right: 5px
-    background: #fff
+    background: $color-black
     opacity: 1
     display: flex
 
   .kpi-total-statistic
     width: 50%
     margin: 5px
-    border-right: 2px solid $color-blue
+    border-right: 2px solid $color-bright-red
     display: flex
     flex-direction: column
 
   .kpi-total-statistic-label
-    color: $color-dark-grey
+    color: $color-white
     font-weight: 300
     font-size: clamp(10px, 1.3vw, 15px)
     text-align: center
@@ -119,7 +118,7 @@
     flex-direction: column
 
   .kpi-detailed-death-statistic-label, .kpi-detailed-recover-statistic-label
-    color: $color-dark-grey
+    color: $color-white
     font-weight: 300
     font-size: clamp(10px, 1.3vw, 15px)
     text-align: center
@@ -151,14 +150,14 @@
     height: 40%
     display: flex
     margin: 5px
-    color: $color-dark-grey
+    color: #fff
     text-align: center
     font-size: clamp(10px, 1.4vw, 16px)
     align-items: center
 
   // Map widget style
   .map-donut-description
-    color: $color-dark-grey
+    color: $color-white
     font-weight: 300
     font-size: 9px
     text-align: center
@@ -169,7 +168,7 @@
     top: 12px
 
   .map-donut-data-link
-    color: $color-dark-grey
+    color: $color-white
     font-weight: 300
     font-size: 7px
     text-align: center
@@ -179,7 +178,7 @@
     z-index: 10000
 
   .map-donut-data-link a
-    color: $color-dark-grey
+    color: $color-white
     text-decoration: none
     font-weight: bold
 
@@ -236,7 +235,7 @@
   // Bars trend widget style
   .bars-trend-controls
     display: flex
-    color: $color-dark-grey
+    color: $color-white
     font-weight: 300
     font-size: 10px
     text-align: center
@@ -246,7 +245,7 @@
     right: 10px
     top: 5px
     cursor: pointer
-    background: #fff
+    background: #545454
 
   .bars-trend-controls
     .confirmed
@@ -254,7 +253,7 @@
       flex-shrink: 1
       flex-basis: 0
       text-align: center
-      border: 1px solid $color-blue
+      border: 1px solid $color-white
       border-top-left-radius: 4px
       border-bottom-left-radius: 4px
       padding: 3px
@@ -262,11 +261,11 @@
 
   .bars-trend-controls
     .confirmed:hover
-      background: $color-blue
+      background: $color-grey
 
   .bars-trend-controls
     .confirmed.selected
-      background: $color-yellow2
+      background: $color-yellow
       color: $color-grey
       outline: none
 
@@ -276,18 +275,18 @@
       flex-shrink: 1
       flex-basis: 0
       text-align: center
-      border-top: 1px solid $color-blue
-      border-bottom: 1px solid $color-blue
+      border-top: 1px solid $color-white
+      border-bottom: 1px solid $color-white
       padding: 3px
       overflow: hidden
 
   .bars-trend-controls
     .deaths:hover
-      background: $color-blue
+      background: $color-grey
 
   .bars-trend-controls
     .deaths.selected
-      background: $color-bright-red2
+      background: $color-bright-red
       color: $color-grey
       outline: none
 
@@ -297,7 +296,7 @@
       flex-shrink: 1
       flex-basis: 0
       text-align: center
-      border: 1px solid $color-blue
+      border: 1px solid $color-white
       border-top-right-radius: 4px
       border-bottom-right-radius: 4px
       padding: 3px
@@ -305,21 +304,21 @@
 
   .bars-trend-controls
     .recovered:hover
-      background: $color-blue
+      background: $color-grey
 
   .bars-trend-controls
     .recovered.selected
-      background: $color-green2
+      background: $color-green
       color: $color-grey
       outline: none
 
   .bars-trend-input
     left: 10px
-    border: 1px solid $color-blue
+    border: 1px solid $color-white
     height: 16px
     border-radius: 4px
-    background: #fff
-    color: $color-dark-grey
+    background: $color-grey
+    color: $color-white
     font-family: roboto condensed,sans-serif
     text-transform: uppercase
     font-weight: 300
@@ -330,13 +329,13 @@
     z-index: 10
 
   .bars-trend-input::placeholder
-    color: rgba(62, 61, 61, 0.8)
+    color: rgba(213, 236, 233, 0.8)
 
   .bars-trend-description
     font-weight: 300
     font-size: 9px
     text-align: left
-    color: $color-dark-grey
+    color: $color-white
     position: absolute
     width: 40%
     top: 5px
@@ -348,7 +347,7 @@
     width: 200px
 
   .bars-3d-description
-    color: $color-dark-grey
+    color: $color-white
     font-weight: 300
     font-size: 9px
     text-align: left
@@ -361,14 +360,14 @@
   .table-chart
     width: 100%
     height: 100%
-    color: $color-dark-grey
+    color: $color-white
     font-weight: 300
     font-size: 10px
     text-align: center
 
   .ag-header-cell-label
     justify-content: center
-    border-bottom: 1px solid $color-blue
+    border-bottom: 1px solid $color-bright-red
     align-items: center
     font-weight: bold
 
@@ -405,7 +404,7 @@
   // AreaChart widget style
   .area-chart-controls
     display: flex
-    color: $color-dark-grey
+    color: $color-white
     font-weight: 300
     font-size: 10px
     text-align: center
@@ -415,7 +414,7 @@
     right: 10px
     top: 5px
     cursor: pointer
-    background: #fff
+    background: #545454
 
   .area-chart-controls
     .confirmed.dynamic
@@ -423,18 +422,18 @@
       flex-shrink: 1
       flex-basis: 0
       text-align: center
-      border: 1px solid $color-blue
+      border: 1px solid $color-white
       border-top-left-radius: 4px
       border-bottom-left-radius: 4px
       padding: 3px
 
   .area-chart-controls
     .confirmed.dynamic:hover
-      background: $color-blue
+      background: $color-grey
 
   .area-chart-controls
     .confirmed.dynamic.selected
-      background: $color-yellow2
+      background: $color-yellow
       color: $color-grey
       outline: none
 
@@ -444,20 +443,20 @@
       flex-shrink: 1
       flex-basis: 0
       text-align: center
-      border-top: 1px solid $color-blue
-      border-bottom: 1px solid $color-blue
-      border-right: 1px solid $color-blue
+      border-top: 1px solid $color-white
+      border-bottom: 1px solid $color-white
+      border-right: 1px solid $color-white
       border-top-right-radius: 4px
       border-bottom-right-radius: 4px
       padding: 3px
 
   .area-chart-controls
     .confirmed.total:hover
-      background: $color-blue
+      background: $color-grey
 
   .area-chart-controls
     .confirmed.total.selected
-      background: $color-yellow2
+      background: $color-yellow
       color: $color-grey
       outline: none
 
@@ -467,18 +466,18 @@
       flex-shrink: 1
       flex-basis: 0
       text-align: center
-      border: 1px solid $color-blue
+      border: 1px solid $color-white
       border-top-left-radius: 4px
       border-bottom-left-radius: 4px
       padding: 3px
 
   .area-chart-controls
     .deaths.dynamic:hover
-      background: $color-blue
+      background: $color-grey
 
   .area-chart-controls
     .deaths.dynamic.selected
-      background: $color-red2
+      background: $color-red
       color: $color-grey
       outline: none
 
@@ -488,25 +487,25 @@
       flex-shrink: 1
       flex-basis: 0
       text-align: center
-      border-top: 1px solid $color-blue
-      border-bottom: 1px solid $color-blue
-      border-right: 1px solid $color-blue
+      border-top: 1px solid $color-white
+      border-bottom: 1px solid $color-white
+      border-right: 1px solid $color-white
       border-top-right-radius: 4px
       border-bottom-right-radius: 4px
       padding: 3px
 
   .area-chart-controls
     .deaths.total:hover
-      background: $color-blue
+      background: $color-grey
 
   .area-chart-controls
     .deaths.total.selected
-      background: $color-red2
+      background: $color-red
       color: $color-grey
       outline: none
 
   .area-chart-description
-    color: $color-dark-grey
+    color: $color-white
     font-weight: 300
     font-size: 9px
     text-align: left
@@ -522,11 +521,11 @@
   .toolbar-component
     .dark-theme
       margin-left: 5px
-      margin-top: 3px
+      margin-top: 4px
       cursor: pointer
 
   .toolbar-component
     .light-theme
       margin-left: 5px
-      margin-top: 3px
+      margin-top: 4px
       cursor: pointer

@@ -6,6 +6,7 @@ class MapDonutChart extends Component {
     constructor(props) {
         super(props);
         this.state = { width: 0, height: 0 };
+        this.id = props.id !== undefined ? props.id : '';
     }
 
     updateDimensions() {
@@ -53,7 +54,7 @@ class MapDonutChart extends Component {
                 <div className="map-donut-description">{description}</div>
                 <div className="map-donut-data-link">Based on <a href="https://github.com/pomber/covid19" target="_blank">github.com/pomber/covid19</a> data</div>
 
-                <div style={style} className="MapDonutChart" id="MapDonutChart" ref={element => { this.container = element }}>
+                <div style={style} className="MapDonutChart" id={"MapDonutChart" + this.id} ref={element => { this.container = element }}>
 
                 </div>
             </div>

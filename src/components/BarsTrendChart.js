@@ -72,6 +72,7 @@ class BarsTrendChart extends Component {
             width: 100 + '%',
             height: 100 + '%'
         };
+
         const controls = ['confirmed', 'deaths', 'recovered'];
         const classes = controls.map(item => {
            return item === this.state.mode ? item + ' selected' : item;

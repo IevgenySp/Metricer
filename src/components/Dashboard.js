@@ -39,7 +39,8 @@ class Dashboard extends Component {
                 <div key={item.i}>Empty</div>;
         });
         const className = 'layout ' + this.props.styleTheme;
-        const pageColors = ['#0a1a1f', '#fff'];
+        //const pageColors = ['#0a1a1f', '#fff'];
+        const pageColors = ['#0a1a1f', '#eeeeee'];
 
         if (this.props.styleTheme === 'dark') {
             document.body.style.background = pageColors[0];

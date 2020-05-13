@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" id="Layer_1" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+<path d="M46.667,50c0,1.833-1.501,3.333-3.334,3.333h-30C11.501,53.333,10,51.833,10,50V13.333C10,11.501,11.501,10,13.333,10h30  c1.833,0,3.334,1.501,3.334,3.333V50z"/>
+<path d="M90,86.667C90,88.499,88.499,90,86.667,90h-30c-1.833,0-3.334-1.501-3.334-3.333V50c0-1.833,1.501-3.333,3.334-3.333h30  c1.832,0,3.333,1.5,3.333,3.333V86.667z"/>
+<path d="M46.667,86.667c0,1.832-1.501,3.333-3.334,3.333h-30C11.501,90,10,88.499,10,86.667V63.333C10,61.501,11.501,60,13.333,60  h30c1.833,0,3.334,1.501,3.334,3.333V86.667z"/>
+<path d="M90,36.667C90,38.499,88.499,40,86.667,40h-30c-1.833,0-3.334-1.501-3.334-3.333V13.333c0-1.832,1.501-3.333,3.334-3.333h30  C88.499,10,90,11.501,90,13.333V36.667z"/>
+
+	<metadata>
+		<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+			<rdf:Description about="https://admin.iconscout.com/legal#licenses" dc:title="01 theme layout design division partition" dc:description="01 theme layout design division partition" dc:publisher="Iconscout" dc:date="2017-06-20" dc:format="image/svg+xml" dc:language="en">
+				<dc:creator>
+					<rdf:Bag>
+						<rdf:li>Danil Polshin</rdf:li>
+					</rdf:Bag>
+				</dc:creator>
+			</rdf:Description>
+		</rdf:RDF>
+    </metadata></svg>
