@@ -13,7 +13,8 @@
     display: flex
 
     .reporter-toolbar-left
-      position: fixed
+      // Not working properly with react scroll
+      //position: fixed
       margin-left: -63px
       .reporter-icon
         width: 60px
@@ -61,8 +62,13 @@
         border-left: 3px solid rgba(139, 195, 74, 0.59)
 
     .reporter-document
+      //all rules needed to provide proper scrolling work
       display: flex
       flex-direction: column
+      overflow: auto
+      height: 100vh
+      position: relative
+      align-items: flex-start
       .reporter-paper
         background: #ffffff
         margin-bottom: 10px
@@ -98,16 +104,83 @@
             justify-content: center
             text-transform: uppercase
             font-size: 14px
-            cursor: pointer
+            cursor: text
+          .react-reporter-text
+            height: 100%
+            .react-reporter-text-toolbox
+              width: 60px
+              height: 20px
+              position: absolute
+              right: 0
+              transition: 0.5s
+              display: flex
+              opacity: 0
+            .react-reporter-text-toolbox-item
+              color: #fff
+              align-items: center
+              display: flex
+              justify-content: center
+              font-style: normal
+              border-radius: 2px
+              cursor: pointer
+            .react-reporter-text-toolbox-item.react-reporter-text-toolbox-clear
+              background: rgba(244, 67, 54, 0.8)
+              width: 20px
+            .react-reporter-text-toolbox-item.react-reporter-text-toolbox-source
+              background: rgba(255, 194, 8, 0.8)
+              width: 20px
+            .react-reporter-text-toolbox-item.react-reporter-text-toolbox-analisis
+              background: rgba(139, 196, 74, 0.8)
+              width: 20px
+              height: 30px
+
+
+            .react-reporter-text-area
+              width: calc(100% - 5px)
+              height: 100%
+              border-radius: 2px
+              resize: none
+              border: none
+              box-shadow: 0 1px 3px 0 rgba(3, 169, 244, 0.6), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12)
+              font-family: noto sans,sans-serif
+              color: #3a3a3a
+              line-height: 16px
+              font-size: 14px
+              padding-left: 5px
+            .react-reporter-text-read-mode-external
+              font-style: italic
+              transition: 0.5s
+            .react-reporter-text-read-mode-external:hover
+              background: #f9f8f8
+              cursor: pointer
+            .react-reporter-text-read-mode
+              font-style: normal
+              height: 100%
+              padding-left: 5px
+              padding-top: 5px
+              transition: 0.5s
+            .react-reporter-text-read-mode.header
+              font-size: 16px
+              font-weight: bold
+              text-transform: uppercase
+            .react-reporter-text-read-mode:hover
+              background: #f9f8f8
+              cursor: pointer
+
+          .react-reporter-text:hover
+            .react-reporter-text-toolbox
+              opacity: 1
 
     .reporter-toolbar-right
-      position: fixed
+      // Not working properly with react scroll
+      //position: fixed
       display: flex
       .reporter-control
         width: 60px
         height: 65px
         //background: #29373d /*rgba(96, 125, 139, 0.41)*/
-        border-left: 3px solid rgba(96, 125, 139, 0.41)
+        margin-left: 2px
+        border-right: 3px solid rgba(96, 125, 139, 0)
         border-bottom-right-radius: 50%
         border-top-right-radius: 50%
         display: flex

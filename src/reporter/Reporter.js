@@ -27,7 +27,7 @@ class Reporter {
               },
 
               {
-                  id: 'text_2', width: 530, height: 70, left: 30, top: 45, type: 'text'
+                  id: 'text_2', width: 530, height: 70, left: 30, top: 45, type: 'text', textClass: 'header', reportSource: 'reportHeader'
               },
               {
                   id: 'text_3', width: 240, height: 355, left: 30, top: 140, type: 'text'
@@ -51,7 +51,7 @@ class Reporter {
               },
 
               {
-                  id: 'text_2', width: 490, height: 40, left: 50, top: 40, type: 'text'
+                  id: 'text_2', width: 490, height: 40, left: 50, top: 40, type: 'text', textClass: 'header'
               },
               {
                   id: 'text_2', width: 150, height: 320, left: 390, top: 485, type: 'text'

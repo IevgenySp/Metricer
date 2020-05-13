@@ -21,6 +21,7 @@ class ReportsComponent extends Component {
           documentSize: ['a4', 72],
           theme: this.props.styleTheme,
           reportName: 'covid-19',
+          reportHeader: 'covid-19 report: analytic of pandemic flow all over the world. Comparable analytic among different countries.',
           widgets: [
               {
                   id: 0,
@@ -105,7 +106,7 @@ class ReportsComponent extends Component {
 
         const style = {
             width: 100 + 'vw',
-            height: 100 + 'vh',
+            //height: 100 + 'vh',
             display: display
         };
 

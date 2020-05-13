@@ -32,6 +32,8 @@ class ToolbarComponent extends Component {
     }
 
     handleShowReportsClick(isShow) {
+        isShow ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'unset';
+
         this.setState({showReports: isShow})
     }
 
@@ -43,34 +45,36 @@ class ToolbarComponent extends Component {
         let darkStyle = "dark-theme";
         let lightStyle = "light-theme";
         let reportsColor = "#000000";
+        let currentStyle;
+        let iconColor;
+        let title;
+        let switchTo;
 
         if (this.props.styleTheme === 'dark') {
             darkStyle += ' selected';
             reportsColor = "#d5ece9";
+            currentStyle = darkStyle;
+            iconColor = "#d5ece9";
+            title = 'Light theme';
+            switchTo = 'light';
 
         }
         if (this.props.styleTheme === 'light') {
             lightStyle += ' selected';
+            currentStyle = lightStyle;
+            iconColor = "#000000";
+            title = 'Dark theme';
+            switchTo = 'dark';
         }
 
         return (
             <div style={style} className="toolbar-component">
-                <div className={darkStyle} title="Dark theme" onClick={() => this.handleClick('dark')}>
-                    <svg viewBox="-4 -3 25 25" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.31 0a8.32 8.32 0 0 1-8.3 14.4A9.04 9.04 0 1 0 8.32 0z"/>
-                    </svg>
-                </div>
-                <div className={lightStyle} title="Light theme" onClick={() => this.handleClick('light')}>
-                    <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#d5ece9">
-                        <path d="M9 4.05c.53 0 1.05.09 1.53.24L9 0 7.47 4.29A4.8 4.8 0 0 1 9 4.05z"/>
-                        <path d="m18 9-4.29-1.53a4.8 4.8 0 0 1 0 3.06z"/>
-                        <path d="M6.76 4.59L2.64 2.63 4.6 6.75a4.9 4.9 0 0 1 2.16-2.16z"/>
-                        <path d="m13.41 6.75 1.96-4.12-4.12 1.96a4.95 4.95 0 0 1 2.16 2.16z"/>
-                        <path d="M9 13.95c-.53 0-1.05-.09-1.53-.24L9 18l1.53-4.29a4.8 4.8 0 0 1-1.53.24z"/>
-                        <path d="m11.25 13.41 4.12 1.96-1.96-4.12a4.9 4.9 0 0 1-2.16 2.16z"/>
-                        <path d="M4.05 9c0-.53.09-1.04.24-1.53L0 9l4.29 1.53A4.8 4.8 0 0 1 4.05 9z"/>
-                        <path d="m4.59 11.25-1.96 4.12 4.12-1.96a4.9 4.9 0 0 1-2.16-2.16z"/>
-                        <circle cx="9" cy="9" r="3.46"/>
+                <div className={currentStyle} title={title} onClick={() => this.handleClick(switchTo)}>
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.0" id="Layer_1" x="0px" y="0px" preserveAspectRatio="none" width="34px" height="39px" fill={iconColor} viewBox="0 0 100 100" enableBackground="new 0 0 100 100" xmlSpace="preserve">
+                        <path d="M46.667,50c0,1.833-1.501,3.333-3.334,3.333h-30C11.501,53.333,10,51.833,10,50V13.333C10,11.501,11.501,10,13.333,10h30  c1.833,0,3.334,1.501,3.334,3.333V50z"/>
+                        <path d="M90,86.667C90,88.499,88.499,90,86.667,90h-30c-1.833,0-3.334-1.501-3.334-3.333V50c0-1.833,1.501-3.333,3.334-3.333h30  c1.832,0,3.333,1.5,3.333,3.333V86.667z"/>
+                        <path d="M46.667,86.667c0,1.832-1.501,3.333-3.334,3.333h-30C11.501,90,10,88.499,10,86.667V63.333C10,61.501,11.501,60,13.333,60  h30c1.833,0,3.334,1.501,3.334,3.333V86.667z"/>
+                        <path d="M90,36.667C90,38.499,88.499,40,86.667,40h-30c-1.833,0-3.334-1.501-3.334-3.333V13.333c0-1.832,1.501-3.333,3.334-3.333h30  C88.499,10,90,11.501,90,13.333V36.667z"/>
                     </svg>
                 </div>
                 <div className="reports" onClick={() => this.handleShowReportsClick(true)}>

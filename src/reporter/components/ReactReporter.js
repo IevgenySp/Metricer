@@ -36,8 +36,14 @@ class ReactReporter extends Component {
                         height: item.height,
                         left: item.left,
                         top: item.top,
-                        widgetId: null
+                        widgetId: null,
+                        textClass: item.textClass ? item.textClass : null
                     };
+
+                    //TODO: Temporery hardcoded part
+                    if (item.reportSource && item.reportSource === 'reportHeader') {
+                        textScheema[i]['paper-block-' + i + '-' + index].text = this.config['reportHeader'];
+                    }
                 }
             });
         }
@@ -85,7 +91,8 @@ class ReactReporter extends Component {
     }
 
     export() {
-        let docPages = document.querySelector(".reporter-document").childNodes;
+        // div.reporter-document-wrapper needed to provide proper scrolling work
+        let docPages = document.querySelector(".reporter-document-wrapper").childNodes;
         let name = this.config.reportName ? this.config.reportName : 'default-report';
         // Action needed for correct capturing of element by html2canvas library
         window.scrollTo(0,0);
@@ -213,9 +220,11 @@ class ReactReporter extends Component {
                         {widgets}
                     </div>
                     <div className="reporter-document">
-                        {docStructure(this.pages)}
+                        <div className="reporter-document-wrapper">
+                            {docStructure(this.pages)}
+                        </div>
                     </div>
-                    <div className="reporter-toolbar-right" style={{marginLeft: style.width}} onClick={this.export.bind(this)}>
+                    <div className="reporter-toolbar-right" onClick={this.export.bind(this)}>
                         {controls}
                     </div>
                 </div>

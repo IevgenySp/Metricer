@@ -128,7 +128,7 @@ class BarsTrend {
 
         let option = {
             grid: {
-              width: '85%',
+              width: '87%',
               top: 40
             },
             tooltip: {
@@ -141,6 +141,8 @@ class BarsTrend {
             //},
             dataZoom: [{
                 type: 'slider',
+                height: '30px',
+                bottom: '5px',
                 startValue: dataZoomRange.startValue,
                 endValue: dataZoomRange.endValue,
                 fillerColor: styles.dataZoom.fillerColor,
