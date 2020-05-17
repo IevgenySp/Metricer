@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReporterRenderer from '../reporter/ReporterRenderer';
+import AnalizerPomberCovid19 from '../analizer/plugins/AnalizerPomberCovid19';
 import KPI from '../components/KPI';
 import MapDonutChart from '../components/MapDonutChart.js';
 import BarsTrendChart from '../components/BarsTrendChart';
@@ -13,15 +14,16 @@ class ReportsComponent extends Component {
         super(props);
         this.state = {width: 0, height: 0};
         this.ReporterRenderer = new ReporterRenderer();
+        this.Analizer = new AnalizerPomberCovid19({data: this.props.data});
     }
 
     componentDidMount() {
-        //this.buildChart(this.container);
         this.config = {
           documentSize: ['a4', 72],
           theme: this.props.styleTheme,
           reportName: 'covid-19',
           reportHeader: 'covid-19 report: analytic of pandemic flow all over the world. Comparable analytic among different countries.',
+          analizer: this.Analizer,
           widgets: [
               {
                   id: 0,
@@ -81,7 +83,6 @@ class ReportsComponent extends Component {
     }
 
     componentDidUpdate() {
-        //this.updateChart(this.container);
         this.config.theme = this.props.styleTheme;
         this.ReporterComponent = this.ReporterRenderer.render('React', this.container, this.config);
     }

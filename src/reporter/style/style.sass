@@ -15,7 +15,7 @@
     .reporter-toolbar-left
       // Not working properly with react scroll
       //position: fixed
-      margin-left: -63px
+      //margin-left: -63px
       .reporter-icon
         width: 60px
         height: 65px
@@ -159,6 +159,8 @@
               padding-left: 5px
               padding-top: 5px
               transition: 0.5s
+              white-space: pre-wrap
+              overflow: auto
             .react-reporter-text-read-mode.header
               font-size: 16px
               font-weight: bold
@@ -170,6 +172,24 @@
           .react-reporter-text:hover
             .react-reporter-text-toolbox
               opacity: 1
+
+    .reporter-toolbar-bottom
+      position: absolute
+      bottom: 0
+      width: 90px
+      height: 30px
+      background: rgba(0, 0, 0, 0.9)
+      margin-left: auto
+      margin-right: auto
+      left: 0
+      right: 0
+      border-top-left-radius: 3px
+      border-top-right-radius: 3px
+      color: #f9f8f8
+      display: flex
+      justify-content: center
+      align-items: center
+      font-size: 10px
 
     .reporter-toolbar-right
       // Not working properly with react scroll

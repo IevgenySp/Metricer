@@ -3,7 +3,6 @@ import html2canvas from 'html2canvas/dist/html2canvas.min';
 
 class Reporter {
     constructor(props) {
-        //this.container = props.container;
         this.config = props.config;
         this.sizesScheema = {
             a4: {
@@ -30,10 +29,10 @@ class Reporter {
                   id: 'text_2', width: 530, height: 70, left: 30, top: 45, type: 'text', textClass: 'header', reportSource: 'reportHeader'
               },
               {
-                  id: 'text_3', width: 240, height: 355, left: 30, top: 140, type: 'text'
+                  id: 'text_3', width: 240, height: 355, left: 30, top: 140, type: 'text', analizer: true, analizerSource: 'widget_0'
               },
               {
-                  id: 'text_4', width: 240, height: 285, left: 30, top: 520, type: 'text'
+                  id: 'text_4', width: 240, height: 285, left: 30, top: 520, type: 'text', analizer: true, analizerSource: 'widget_1'
               }
           ],
           default2: [
@@ -54,9 +53,9 @@ class Reporter {
                   id: 'text_2', width: 490, height: 40, left: 50, top: 40, type: 'text', textClass: 'header'
               },
               {
-                  id: 'text_2', width: 150, height: 320, left: 390, top: 485, type: 'text'
+                  id: 'text_3', width: 150, height: 320, left: 390, top: 485, type: 'text', analizer: true, analizerSource: 'widget_0'
               }
-          ]
+          ],
         }
     }
 
