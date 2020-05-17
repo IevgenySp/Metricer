@@ -9,6 +9,7 @@ class ReactReporter extends Component {
         this.config = props.config;
         this.Reporter = new Reporter(props.config);
         this.pages = 2;
+        this.margin = 5;
 
         let reporterScheema = {};
         let textScheema = {};
@@ -37,6 +38,7 @@ class ReactReporter extends Component {
                         left: item.left,
                         top: item.top,
                         widgetId: null,
+                        widgetType: null,
                         textClass: item.textClass ? item.textClass : null
                     };
 
@@ -44,11 +46,19 @@ class ReactReporter extends Component {
                     if (item.reportSource && item.reportSource === 'reportHeader') {
                         textScheema[i]['paper-block-' + i + '-' + index].text = this.config['reportHeader'];
                     }
+
+                    if (item.analizer) {
+                        textScheema[i]['paper-block-' + i + '-' + index].analizer = item.analizer;
+
+                        if (item.analizerSource) {
+                            textScheema[i]['paper-block-' + i + '-' + index].analizerSource = item.analizerSource;
+                        }
+                    }
                 }
             });
         }
 
-        this.state = {width: 0, height: 0, reporterScheema, textScheema};
+        this.state = {width: 0, height: 0, currentPage: 1, reporterScheema, textScheema};
     }
 
     updateDimensions() {
@@ -99,13 +109,23 @@ class ReactReporter extends Component {
         Reporter.export(docPages, name);
     }
 
+    handleDocumentScroll(ev) {
+        let currentPage = Math.round(ev.target.scrollTop /
+            ((this.dimensions.height + this.margin))) + 1;
+
+        if (this.state.currentPage !== currentPage) {
+            this.setState({
+                currentPage: currentPage
+            })
+        }
+    }
+
     componentDidMount() {
         window.addEventListener('resize', this.updateDimensions.bind(this));
-        //this.buildChart(this.container);
     }
 
     componentDidUpdate() {
-        //this.updateChart(this.container);
+
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -120,7 +140,7 @@ class ReactReporter extends Component {
 
     render() {
         const docSize = this.config.documentSize ? this.config.documentSize : ['a4', 72];
-        const dimensions = this.Reporter.getSize(...docSize);
+        const dimensions = this.dimensions = this.Reporter.getSize(...docSize);
         const style = {
           width: dimensions.width + 'px',
           height: dimensions.height + 'px'
@@ -176,6 +196,28 @@ class ReactReporter extends Component {
                   </div>);
               });
           };
+          let analizerStructure = widgetType => {
+              let analizerFunc = null;
+
+              if (this.config.analizer) {
+                  switch(widgetType) {
+                      case 'map':
+                          analizerFunc = () => this.config.analizer.getRandomFromSections(
+                              ['total.confirmed', 'total.deaths', 'total.recovered']);
+                          break;
+                      case 'table':
+                          analizerFunc = () => this.config.analizer.getRandomFromSections(
+                              ['dynamic.deathsRate', 'dynamic.recovered', 'dynamic.deathsNumbers']);
+                          break;
+                      case 'trend':
+                          analizerFunc = () => this.config.analizer.getRandomFromSections(
+                              ['countriesStats.peaks', 'countriesStats.changingDynamic', 'countriesStats.recoveringRate']);
+                          break;
+                  }
+              }
+
+              return analizerFunc;
+          };
           let textStructure = pageId => {
               let textScheema = this.state.textScheema[pageId];
               let textWidgets = [];
@@ -186,6 +228,20 @@ class ReactReporter extends Component {
                   let text = '';
                   let style = {width: item.width + 'px', height: item.height + 'px',
                       marginLeft: item.left + 'px', marginTop: item.top + 'px'};
+                  let analizer = null;
+
+                  if (item.analizer && item.analizerSource) {
+                      let block = this.state.reporterScheema[pageId];
+                      let blockKey = Object.keys(block).find(key => block[key].id === item.analizerSource);
+                      let widgetId = block[blockKey].widgetId;
+
+                      if (widgetId !== null) {
+                          let aFunc = analizerStructure(this.config.widgets[widgetId].type);
+                          if (aFunc !== null) {
+                              analizer = {function: aFunc, type: this.config.widgets[widgetId].type};
+                          }
+                      }
+                  }
 
                   if (item.source !== undefined && item.source !== null) {
                       let block = this.state.reporterScheema[pageId];
@@ -199,7 +255,7 @@ class ReactReporter extends Component {
                      }
                   }
 
-                  textWidgets.push(<div className="paper-block-text" style={style} key={index}><ReactReporterText config={item} text={text}/></div>);
+                  textWidgets.push(<div className="paper-block-text" style={style} key={index}><ReactReporterText config={item} text={text} analizer={analizer}/></div>);
               });
 
               return textWidgets;
@@ -219,11 +275,12 @@ class ReactReporter extends Component {
                     <div className="reporter-toolbar-left">
                         {widgets}
                     </div>
-                    <div className="reporter-document">
+                    <div className="reporter-document" onScroll={this.handleDocumentScroll.bind(this)}>
                         <div className="reporter-document-wrapper">
                             {docStructure(this.pages)}
                         </div>
                     </div>
+                    <div className="reporter-toolbar-bottom">{'page ' + this.state.currentPage + '/' + this.pages}</div>
                     <div className="reporter-toolbar-right" onClick={this.export.bind(this)}>
                         {controls}
                     </div>
