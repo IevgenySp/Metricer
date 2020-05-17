@@ -110,6 +110,8 @@ class AnalizerPomberCovid19 {
         let confirmedSort = getSorted(this.data, 'confirmed', 'descending');
         let countries = countriesArr;
         let latestDate = getLatestDate(this.data);
+        // TODO: Move to Analizer
+        //https://stackoverflow.com/questions/54886939/finding-the-peaks-of-an-array-using-javascript
         let getPeaks = (data, n = 3, peakList = [] ) => {
             return data.reduce( ( a, v, i, _a, end_index = _a.length - 1 ) => {
                 let change = v - _a[ i - 1 ] || 0,
