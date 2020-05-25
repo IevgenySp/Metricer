@@ -56,10 +56,11 @@ class MapDonutChart extends Component {
             height: 100 + '%'
         };
         const description = 'Distribution of COVID-19 confirmed, deaths and recovered statistic by countries';
+        const videoLink = 'https://www.youtube.com/embed/O6TrTOf7Nko';
 
         let videoContainer = () => {
             return <div className="map-donut-container-video">
-                <iframe src="http://www.youtube.com/embed/W7qWa52k-nE" frameBorder="0" allowFullScreen>
+                <iframe src={videoLink} frameBorder="0" allowFullScreen>
                 </iframe>
                 <div className="map-donut-containe-close-video" onClick={() => this.handleVideoStateClick()}>Close video</div>
             </div>
