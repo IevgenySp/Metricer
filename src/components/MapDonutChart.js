@@ -56,7 +56,7 @@ class MapDonutChart extends Component {
             height: 100 + '%'
         };
         const description = 'Distribution of COVID-19 confirmed, deaths and recovered statistic by countries';
-        const videoLink = 'https://www.youtube.com/embed/O6TrTOf7Nko';
+        const videoLink = 'https://www.youtube.com/embed/AclcDUDUq7A';
 
         let videoContainer = () => {
             return <div className="map-donut-container-video">
