@@ -34,7 +34,15 @@ class ToolbarComponent extends Component {
     handleShowReportsClick(isShow) {
         isShow ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'unset';
 
+        // Important to close video to avoid reporter widgets logic break
+        this.props.onVideoStateChanged(false);
         this.setState({showReports: isShow})
+    }
+
+    handleVideoStateClick() {
+        let newVideoState = !this.props.showVideo;
+
+        this.props.onVideoStateChanged(newVideoState);
     }
 
     render() {
@@ -91,6 +99,18 @@ class ToolbarComponent extends Component {
                     </div>
                     <ReportsComponent show={this.state.showReports} handleShow={this.handleShowReportsClick.bind(this)}/>
                 </div>
+                <div className="video" onClick={() => this.handleVideoStateClick()}>
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" preserveAspectRatio="none" width="30px" height="34px" viewBox="0 0 72 72" version="1.1">
+                        <title>Youtube introduction</title>
+                        <g id="providers-list" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                            <g id="youtube">
+                                <path id="Rectangle-23" fill="#FFF" d="M9 2h55v67H9z"/>
+                                <rect id="Rectangle-2" fill="#E42B28" x="0" y="0" width="72" height="72" rx="4"/>
+                                <path d="M61.207 23.73c.333 1.338.793 8.667.793 11.464v.612c0 2.797-.46 10.126-.793 11.464-.99 3.979-2.849 5.512-6.27 6.065-1.973.291-11.44.665-18.954.665h.034c-7.514 0-16.981-.374-18.954-.665-3.421-.554-5.28-2.086-6.27-6.065C10.46 45.932 10 38.603 10 35.806v-.612c0-2.797.46-10.126.793-11.464.99-3.979 2.849-5.511 6.27-6.065 1.973-.291 11.44-.665 18.954-.665h-.034c7.514 0 16.981.374 18.954.665 3.421.553 5.28 2.086 6.27 6.064zM30.6 28.002v14.825l13.813-7.588L30.6 28.003z" id="Fill-4" fill="#FFFFFE"/>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
             </div>
         )
     }
@@ -99,10 +119,14 @@ class ToolbarComponent extends Component {
 export default connect((state, ownProps) => ({
         ownProps,
         data: state.pomberCovidData,
-        styleTheme: state.styleTheme
+        styleTheme: state.styleTheme,
+        showVideo: state.turnOnOffVideo
     }),
     dispatch => ({
         onStyleChanged: (data) => {
             dispatch({type: 'STYLE_THEME_CHANGE', payload: data});
+        },
+        onVideoStateChanged: (data) => {
+            dispatch({type: 'TURN_ON_OFF_VIDEO', payload: data});
         }
     }))(ToolbarComponent);

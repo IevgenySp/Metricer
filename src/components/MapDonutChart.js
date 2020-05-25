@@ -39,7 +39,11 @@ class MapDonutChart extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         /*return nextProps.chart !== this.props.chart ||
             nextState.animationLayerActive !== this.state.animationLayerActive;*/
-        return nextProps.styleTheme !== this.props.styleTheme;
+        return nextProps.styleTheme !== this.props.styleTheme || nextProps.showVideo !== this.props.showVideo;
+    }
+
+    handleVideoStateClick() {
+        this.props.onVideoStateChanged(false);
     }
 
     render() {
@@ -47,16 +51,36 @@ class MapDonutChart extends Component {
             width: 100 + '%',
             height: 100 + '%'
         };
+        let innerStyle = {
+            width: 100 + '%',
+            height: 100 + '%'
+        };
         const description = 'Distribution of COVID-19 confirmed, deaths and recovered statistic by countries';
+
+        let videoContainer = () => {
+            return <div className="map-donut-container-video">
+                <iframe src="http://www.youtube.com/embed/W7qWa52k-nE" frameBorder="0" allowFullScreen>
+                </iframe>
+                <div className="map-donut-containe-close-video" onClick={() => this.handleVideoStateClick()}>Close video</div>
+            </div>
+        };
+        let vContainer = null;
+
+        if (this.props.showVideo) {
+            innerStyle.opacity = 0;
+            vContainer = videoContainer();
+        } else {
+            vContainer = null;
+            delete innerStyle.opacity;
+        }
 
         return (
             <div style={style}>
                 <div className="map-donut-description">{description}</div>
                 <div className="map-donut-data-link">Based on <a href="https://github.com/pomber/covid19" target="_blank">github.com/pomber/covid19</a> data</div>
-
-                <div style={style} className="MapDonutChart" id={"MapDonutChart" + this.id} ref={element => { this.container = element }}>
-
+                <div style={innerStyle} className="MapDonutChart" id={"MapDonutChart" + this.id} ref={element => { this.container = element }}>
                 </div>
+                {vContainer}
             </div>
         )
     }
@@ -65,8 +89,11 @@ class MapDonutChart extends Component {
 export default connect((state, ownProps) => ({
         ownProps,
         data: state.pomberCovidData,
-        styleTheme: state.styleTheme
+        styleTheme: state.styleTheme,
+        showVideo: state.turnOnOffVideo
     }),
     dispatch => ({
-
+        onVideoStateChanged: (data) => {
+            dispatch({type: 'TURN_ON_OFF_VIDEO', payload: data});
+        }
     }))(MapDonutChart);
