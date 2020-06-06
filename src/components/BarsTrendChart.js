@@ -6,7 +6,7 @@ class BarsTrendChart extends Component {
     constructor(props) {
         super(props);
         this.state = {width: 0, height: 0, mode: 'confirmed', country: ''};
-        this.countries =  Object.keys(this.props.data[0]);
+        this.countries = this.props.data.length > 0 ? Object.keys(this.props.data[0]) : [];
     }
 
     updateDimensions() {
@@ -21,20 +21,35 @@ class BarsTrendChart extends Component {
 
     componentDidMount() {
         window.addEventListener('resize', this.updateDimensions.bind(this));
-        //this.buildChart(this.container);
-        this.BarsTrend = new BarsTrend({
-            container:this.container,
-            data: this.props.data,
-            mode: this.state.mode,
-            country: this.state.country,
-            style: this.props.styleTheme});
-        this.BarsTrend.build();
+
+        if (this.props.data.length !== 0) {
+            this.BarsTrend = new BarsTrend({
+                container: this.container,
+                data: this.props.data,
+                mode: this.state.mode,
+                country: this.state.country,
+                style: this.props.styleTheme
+            });
+            this.BarsTrend.build();
+        }
     }
 
     componentDidUpdate() {
-        //this.updateChart(this.container);
-        let options = {mode: this.state.mode, country: this.state.country, style: this.props.styleTheme};
-        this.BarsTrend.build(options);
+        this.countries = Object.keys(this.props.data[0]);
+
+        if (!this.BarsTrend) {
+            this.BarsTrend = new BarsTrend({
+                container: this.container,
+                data: this.props.data,
+                mode: this.state.mode,
+                country: this.state.country,
+                style: this.props.styleTheme
+            });
+            this.BarsTrend.build();
+        } else {
+            let options = {mode: this.state.mode, country: this.state.country, style: this.props.styleTheme};
+            this.BarsTrend.build(options);
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {

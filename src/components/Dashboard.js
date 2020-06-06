@@ -7,7 +7,7 @@ import '../../node_modules/react-resizable/css/styles.css'
 class Dashboard extends Component {
     constructor(props) {
         super(props);
-        this.props.onDataUpload([this.props.dataObj]);
+        //this.props.onDataUpload([this.props.dataObj]);
         this.state = { width: 0, height: 0 };
     }
 
@@ -63,7 +63,7 @@ export default connect((state, ownProps) => ({
         styleTheme: state.styleTheme
     }),
     dispatch => ({
-        onDataUpload: (data) => {
+        /*onDataUpload: (data) => {
             dispatch({type: 'POMBER_COVID_DATA_UPDATE', payload: data});
-        }
+        }*/
     }))(Dashboard);

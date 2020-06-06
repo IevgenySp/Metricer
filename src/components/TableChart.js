@@ -20,20 +20,26 @@ class TableChart extends Component {
 
     componentDidMount() {
         window.addEventListener('resize', this.updateDimensions.bind(this));
-        //this.buildChart(this.container);
-        this.TableChart = new Table({container:this.container, data: this.props.data, style: this.props.styleTheme});
-        this.TableChart.build();
+
+        if (this.props.data.length !== 0) {
+            this.TableChart = new Table({container:this.container, data: this.props.data, style: this.props.styleTheme});
+            this.TableChart.build();
+        }
     }
 
     componentDidUpdate() {
-        //this.updateChart(this.container);
-        this.TableChart.build({style: this.props.styleTheme});
+        if (!this.TableChart) {
+            this.TableChart = new Table({container:this.container, data: this.props.data, style: this.props.styleTheme});
+            this.TableChart.build();
+        } else {
+            this.TableChart.build({style: this.props.styleTheme});
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         /*return nextProps.chart !== this.props.chart ||
             nextState.animationLayerActive !== this.state.animationLayerActive;*/
-        return nextProps.styleTheme !== this.props.styleTheme;
+        return this.TableChart === undefined || nextProps.styleTheme !== this.props.styleTheme;
     }
 
     componentWillUnmount() {

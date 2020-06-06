@@ -8,18 +8,24 @@ class KPI extends Component {
     }
 
     componentDidMount() {
-        //this.buildChart(this.container);
-        this.KPI = new ComplexKPI({container:this.container, headerLabel: 'global pandemic', data: this.props.data});
-        this.KPI.build();
+        if (this.props.data.length !== 0) {
+            this.KPI = new ComplexKPI({container:this.container, headerLabel: 'global pandemic', data: this.props.data});
+            this.KPI.build();
+        }
     }
 
     componentDidUpdate() {
-        //this.updateChart(this.container);
+        if (!this.KPI) {
+            this.KPI = new ComplexKPI({container:this.container, headerLabel: 'global pandemic', data: this.props.data});
+            this.KPI.build();
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         /*return nextProps.chart !== this.props.chart ||
             nextState.animationLayerActive !== this.state.animationLayerActive;*/
+
+        return true;
     }
 
     render() {
@@ -29,9 +35,7 @@ class KPI extends Component {
         };
 
         return (
-            <div style={style} className="KPI" ref={element => { this.container = element }}>
-
-            </div>
+            <div style={style} className="KPI" ref={element => { this.container = element }}/>
         )
     }
 }

@@ -21,20 +21,33 @@ class AreaChart extends Component {
 
     componentDidMount() {
         window.addEventListener('resize', this.updateDimensions.bind(this));
-        //this.buildChart(this.container);
-        this.Area = new Area({
-            container:this.container,
-            data: this.props.data,
-            value: this.calculatedValue,
-            mode: this.state.mode,
-            style: this.props.styleTheme});
-        this.Area.build();
+
+        if (this.props.data.length !== 0) {
+            this.Area = new Area({
+                container: this.container,
+                data: this.props.data,
+                value: this.calculatedValue,
+                mode: this.state.mode,
+                style: this.props.styleTheme
+            });
+            this.Area.build();
+        }
     }
 
     componentDidUpdate() {
-        //this.updateChart(this.container);
-        let options = {mode: this.state.mode, style: this.props.styleTheme};
-        this.Area.build(options);
+        if (!this.Area) {
+            this.Area = new Area({
+                container: this.container,
+                data: this.props.data,
+                value: this.calculatedValue,
+                mode: this.state.mode,
+                style: this.props.styleTheme
+            });
+            this.Area.build();
+        } else {
+            let options = {mode: this.state.mode, style: this.props.styleTheme};
+            this.Area.build(options);
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {

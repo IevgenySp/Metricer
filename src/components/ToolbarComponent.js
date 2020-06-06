@@ -75,6 +75,9 @@ class ToolbarComponent extends Component {
             switchTo = 'dark';
         }
 
+        let reportsComponent = this.props.data.length > 0 ?
+            <ReportsComponent show={this.state.showReports} handleShow={this.handleShowReportsClick.bind(this)}/> : null;
+
         return (
             <div style={style} className="toolbar-component">
                 <div className={currentStyle} title={title} onClick={() => this.handleClick(switchTo)}>
@@ -97,7 +100,7 @@ class ToolbarComponent extends Component {
                             <path fill={reportsColor} d="M26.395,82.052h25.688c-0.039-0.303-0.092-0.6-0.092-0.912v-4.408H26.395c-1.471,0-2.66,1.188-2.66,2.658   C23.735,80.865,24.924,82.052,26.395,82.052z"></path>
                         </g></svg>
                     </div>
-                    <ReportsComponent show={this.state.showReports} handleShow={this.handleShowReportsClick.bind(this)}/>
+                    {reportsComponent}
                 </div>
                 <div className="video" onClick={() => this.handleVideoStateClick()}>
                     <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" preserveAspectRatio="none" width="30px" height="34px" viewBox="0 0 72 72" version="1.1">

@@ -20,19 +20,31 @@ class Bars3DChart extends Component {
 
     componentDidMount() {
         window.addEventListener('resize', this.updateDimensions.bind(this));
-        //this.buildChart(this.container);
-        this.bars3D = new Bars3D({
-            container:this.container,
-            data: this.props.data,
-            mode: this.state.mode,
-            style: this.props.styleTheme});
-        this.bars3D.build();
+
+        if (this.props.data.length !== 0) {
+            this.bars3D = new Bars3D({
+                container: this.container,
+                data: this.props.data,
+                mode: this.state.mode,
+                style: this.props.styleTheme
+            });
+            this.bars3D.build();
+        }
     }
 
     componentDidUpdate() {
-        //this.updateChart(this.container);
-        let options = {mode: this.state.mode, style: this.props.styleTheme};
-        this.bars3D.build(options);
+        if (!this.bars3D) {
+            this.bars3D = new Bars3D({
+                container: this.container,
+                data: this.props.data,
+                mode: this.state.mode,
+                style: this.props.styleTheme
+            });
+            this.bars3D.build();
+        } else {
+            let options = {mode: this.state.mode, style: this.props.styleTheme};
+            this.bars3D.build(options);
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {

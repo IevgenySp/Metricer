@@ -20,6 +20,7 @@ module.exports = env => {
         devtool: isProd ? '' : 'inline-source-map',
         devServer: {
             contentBase: './dist',
+            historyApiFallback: true
         },
         module: {
             rules: [
@@ -86,6 +87,9 @@ module.exports = env => {
             }, {
                 from: 'preloader',
                 to: 'preloader',
+            }, {
+                from: 'src/cv/img',
+                to: 'cv/img',
             }]),
             // load `moment/locale/ja.js` and `moment/locale/it.js`
             new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /ja|it/),

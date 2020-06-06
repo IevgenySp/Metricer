@@ -20,11 +20,12 @@ class MapDonutChart extends Component {
     };
 
     componentDidMount() {
-        //this.buildChart(this.container);
         window.addEventListener('resize', this.updateDimensions.bind(this));
 
-        this.MapDonut = new MapDonut({container: this.container, data: this.props.data, style: this.props.styleTheme});
-        this.MapDonut.build();
+        if (this.props.data.length !== 0) {
+            this.MapDonut = new MapDonut({container: this.container, data: this.props.data, style: this.props.styleTheme});
+            this.MapDonut.build();
+        }
     }
 
     componentWillUnmount() {
@@ -32,14 +33,18 @@ class MapDonutChart extends Component {
     }
 
     componentDidUpdate() {
-        //this.updateChart(this.container);
-        this.MapDonut.build({style: this.props.styleTheme});
+        if (!this.MapDonut) {
+            this.MapDonut = new MapDonut({container: this.container, data: this.props.data, style: this.props.styleTheme});
+            this.MapDonut.build();
+        } else {
+            this.MapDonut.build({style: this.props.styleTheme});
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         /*return nextProps.chart !== this.props.chart ||
             nextState.animationLayerActive !== this.state.animationLayerActive;*/
-        return nextProps.styleTheme !== this.props.styleTheme || nextProps.showVideo !== this.props.showVideo;
+        return this.MapDonut === undefined || nextProps.styleTheme !== this.props.styleTheme || nextProps.showVideo !== this.props.showVideo;
     }
 
     handleVideoStateClick() {
